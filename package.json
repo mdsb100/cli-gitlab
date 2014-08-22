@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mosb/gitlab-cli"
+    "url": "https://github.com/mdsb/gitlab-cli"
   },
   "dependencies": {
     "gitlab": "1.0.0",
