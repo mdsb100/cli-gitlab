@@ -1,0 +1,44 @@
+{
+  "name": "gitlab-cli",
+  "version": "1.0.0",
+  "description": "GitLab CLI library.",
+  "main": "bin/command.js",
+  "directories": {
+
+  },
+  "scripts": {
+    "build": "./node_modules/coffee-script/bin/cake build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mosb/gitlab-cli"
+  },
+  "dependencies": {
+    "gitlab": "1.0.0",
+    "commander": "latest",
+    "nconf": "latest",
+    "cliff": "latest"
+  },
+  "devDependencies": {
+    "coffee-script": "*"
+  },
+  "keywords": [
+    "gitlab",
+    "cli",
+    "git",
+    "api",
+    "request"
+  ],
+  "author": "mdsb100 <mdsb1000@gmail.com>",
+  "contributors": [
+    {
+      "name": "mdsb100",
+      "url": "https://github.com/mdsb100"
+    }
+  ],
+  "bin": {
+    "gitlab": "bin/gitlab"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
