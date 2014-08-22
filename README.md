@@ -1,4 +1,4 @@
-gitlab-cli
+cli-gitlab
 ===========
 Forked from [node-gitlab](https://github.com/moul/node-gitlab)
 
@@ -6,7 +6,7 @@ Usage
 =====
 ```bash
 # Install from npm for global
-npm install gitlab -g
+npm install cli-gitlab -g
 # You will see all command
 gitlab --help
 # For example
