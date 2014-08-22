@@ -73,15 +73,12 @@ id name    username state
 Contributors
 ------------
 
-- [Glavin Wiechert](https://github.com/Glavin001)
-- [Florian Quiblier](https://github.com/fofoy)
-- [Anthony Heber](https://github.com/aheber)
-- [Evan Heidtmann](https://github.com/ezheidtmann)
-- [luoqpolyvi](https://github.com/luoqpolyvi)
-- [Brian Vanderbusch](https://github.com/LongLiveCHIEF)
-- [daprahamian](https://github.com/daprahamian)
-- [pgorecki](https://github.com/pgorecki)
 - [mdsb100](https://github.com/mdsb100)
+
+Thank
+------------
+
+[Dave Irvine](https://github.com/dave-irvine)
 
 License
 -------
