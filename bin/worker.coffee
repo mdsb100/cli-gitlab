@@ -11,9 +11,10 @@ nconf.defaults
   "table_head_user": JSON.stringify(["id", "name", "username", "state", "email", "created_at"])
   "table_head_project": JSON.stringify(["id", "name", "public", "archived", "visibility_level", "issues_enabled", "wiki_enabled", "created_at", "last_activity_at"])
   "table_head_issue": JSON.stringify(["id", "iid", "project_id", "title", "description", "state", "created_at", "updated_at", "labels", "assignee", "author"])
+  "table_head_commite": JSON.stringify(["id", "title", "author_name", "created_at"])
 gitlab = null
 
-tableHeadType = ["user", "project", "issue"]
+tableHeadType = ["user", "project", "issue", "commite"]
 
 checkOptions = ->
   unless nconf.get("url")
@@ -26,7 +27,7 @@ checkOptions = ->
 
 makeTableByData = (datas, table_head) ->
   if datas.constructor is Array and not datas.length
-    return
+    return console.log("No Datas Or No Permission")
   else if datas.constructor isnt Array
     datas = [datas]
 
@@ -91,51 +92,49 @@ getGitlabDataTypeMap = (type="user") ->
 exports.users =
   all: ->
     requireOrGetGitlab().users.all (users) ->
-      return console.log("No Users")  unless users.length
       users.sort (user1, user2) ->
         parseInt(user1.id) - parseInt(user2.id)
 
-      makeTableByData users, JSON.parse(nconf.get "table_head_user")
-      return
+      makeTableByUser users
 
   current: ->
     requireOrGetGitlab().users.current makeTableByUser
-    return
 
   show: (userId) ->
     requireOrGetGitlab().users.show userId, makeTableByUser
-    return
 
 exports.projects =
   all: ->
     requireOrGetGitlab().projects.all (projects) ->
-      return console.log("No Projects")  unless projects.length
       projects.sort (project1, project2) ->
         parseInt(project1.id) - parseInt(project2.id)
 
-      makeTableByData projects, JSON.parse(nconf.get "table_head_project")
-      return
+      makeTableByProject projects
 
   show: (userId) ->
     requireOrGetGitlab().projects.show userId, makeTableByProject
-    return
 
   members:
     list: (projectId) ->
-      requireOrGetGitlab().projects.members.list projectId, (members) ->
-        return console.log("No Members Or No Permission")  unless members.length
-        makeTableByData members, JSON.parse(nconf.get "table_head_user")
-        return
+      requireOrGetGitlab().projects.members.list projectId, makeTableByUser
+  repository:
+    branches: (projectId) ->
+      requireOrGetGitlab().projects.repository.listBranches projectId, makeTableByData
+    commits: (projectId) ->
+      requireOrGetGitlab().projects.repository.listCommits projectId, (commits) ->
+        makeTableByData commits, JSON.parse(nconf.get "table_head_user")
+    tags: (projectId) ->
+      requireOrGetGitlab().projects.repository.listTags projectId, makeTableByData
+    tree: (projectId) ->
+      requireOrGetGitlab().projects.repository.listTree projectId, makeTableByData
 
 exports.issues =
   all: ->
     requireOrGetGitlab().issues.all (issues) ->
-      return console.log("No Issues Or No Permission")  unless issues.length
       issues.sort (issue1, issue2) ->
         parseInt(issue1.id) - parseInt(issue2.id)
 
-      makeTableByData issues, JSON.parse(nconf.get "table_head_issue")
-      return
+      makeTableByIssue issues
 
 exports.tableHead =
   checkTableHead: (table_head) ->

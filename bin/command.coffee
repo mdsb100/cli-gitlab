@@ -20,18 +20,39 @@ program.command("me")
 
 program.command("projects")
 .description("Get projects from gitlab")
-.option("--members <projectId>", "Get members from project")
-.option("--show <projectId>", "Get project by id from gitlab")
+.option("--id <projectId>", "Project id")
+.option("--members", "Get members by id from project")
+.option("--show", "Get project by id from gitlab")
+.option("--branches", "Get retrive branches of a given project")
+.option("--commits", "Get retrive commits of a given project")
+.option("--tags", "Get retrive tags of a given project")
+.option("--tree", "Get retrive tree of a given project")
 .action( (options) ->
   hasOptions = false
 
-  if options.members?
+  if options.members? and typeof options.id is "string"
     hasOptions = true
-    worker.projects.members.list options.members
+    worker.projects.members.list options.id
 
-  if typeof options.show is "string"
+  if options.show? and typeof options.id is "string"
     hasOptions = true
-    worker.projects.show options.show
+    worker.projects.show options.id
+
+  if options.branches? and typeof options.id is "string"
+    hasOptions = true
+    worker.projects.repository.branches options.id
+
+  if options.commits? and typeof options.id is "string"
+    hasOptions = true
+    worker.projects.repository.commits options.id
+
+  if options.tags? and typeof options.id is "string"
+    hasOptions = true
+    worker.projects.repository.tags options.id
+
+  if options.tree? and typeof options.id is "string"
+    hasOptions = true
+    worker.projects.repository.tree options.id
 
   worker.projects.all() unless hasOptions
 )

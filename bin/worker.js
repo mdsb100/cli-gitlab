@@ -24,12 +24,13 @@ nconf.file({
 nconf.defaults({
   "table_head_user": JSON.stringify(["id", "name", "username", "state", "email", "created_at"]),
   "table_head_project": JSON.stringify(["id", "name", "public", "archived", "visibility_level", "issues_enabled", "wiki_enabled", "created_at", "last_activity_at"]),
-  "table_head_issue": JSON.stringify(["id", "iid", "project_id", "title", "description", "state", "created_at", "updated_at", "labels", "assignee", "author"])
+  "table_head_issue": JSON.stringify(["id", "iid", "project_id", "title", "description", "state", "created_at", "updated_at", "labels", "assignee", "author"]),
+  "table_head_commite": JSON.stringify(["id", "title", "author_name", "created_at"])
 });
 
 gitlab = null;
 
-tableHeadType = ["user", "project", "issue"];
+tableHeadType = ["user", "project", "issue", "commite"];
 
 checkOptions = function() {
   if (!nconf.get("url")) {
@@ -46,7 +47,7 @@ checkOptions = function() {
 makeTableByData = function(datas, table_head) {
   var data, key, row, rows, value, _i, _j, _len, _len1;
   if (datas.constructor === Array && !datas.length) {
-    return;
+    return console.log("No Datas Or No Permission");
   } else if (datas.constructor !== Array) {
     datas = [datas];
   }
@@ -145,46 +146,51 @@ getGitlabDataTypeMap = function(type) {
 exports.users = {
   all: function() {
     return requireOrGetGitlab().users.all(function(users) {
-      if (!users.length) {
-        return console.log("No Users");
-      }
       users.sort(function(user1, user2) {
         return parseInt(user1.id) - parseInt(user2.id);
       });
-      makeTableByData(users, JSON.parse(nconf.get("table_head_user")));
+      return makeTableByUser(users);
     });
   },
   current: function() {
-    requireOrGetGitlab().users.current(makeTableByUser);
+    return requireOrGetGitlab().users.current(makeTableByUser);
   },
   show: function(userId) {
-    requireOrGetGitlab().users.show(userId, makeTableByUser);
+    return requireOrGetGitlab().users.show(userId, makeTableByUser);
   }
 };
 
 exports.projects = {
   all: function() {
     return requireOrGetGitlab().projects.all(function(projects) {
-      if (!projects.length) {
-        return console.log("No Projects");
-      }
       projects.sort(function(project1, project2) {
         return parseInt(project1.id) - parseInt(project2.id);
       });
-      makeTableByData(projects, JSON.parse(nconf.get("table_head_project")));
+      return makeTableByProject(projects);
     });
   },
   show: function(userId) {
-    requireOrGetGitlab().projects.show(userId, makeTableByProject);
+    return requireOrGetGitlab().projects.show(userId, makeTableByProject);
   },
   members: {
     list: function(projectId) {
-      return requireOrGetGitlab().projects.members.list(projectId, function(members) {
-        if (!members.length) {
-          return console.log("No Members Or No Permission");
-        }
-        makeTableByData(members, JSON.parse(nconf.get("table_head_user")));
+      return requireOrGetGitlab().projects.members.list(projectId, makeTableByUser);
+    }
+  },
+  repository: {
+    branches: function(projectId) {
+      return requireOrGetGitlab().projects.repository.listBranches(projectId, makeTableByData);
+    },
+    commits: function(projectId) {
+      return requireOrGetGitlab().projects.repository.listCommits(projectId, function(commits) {
+        return makeTableByData(commits, JSON.parse(nconf.get("table_head_user")));
       });
+    },
+    tags: function(projectId) {
+      return requireOrGetGitlab().projects.repository.listTags(projectId, makeTableByData);
+    },
+    tree: function(projectId) {
+      return requireOrGetGitlab().projects.repository.listTree(projectId, makeTableByData);
     }
   }
 };
@@ -192,13 +198,10 @@ exports.projects = {
 exports.issues = {
   all: function() {
     return requireOrGetGitlab().issues.all(function(issues) {
-      if (!issues.length) {
-        return console.log("No Issues Or No Permission");
-      }
       issues.sort(function(issue1, issue2) {
         return parseInt(issue1.id) - parseInt(issue2.id);
       });
-      makeTableByData(issues, JSON.parse(nconf.get("table_head_issue")));
+      return makeTableByIssue(issues);
     });
   }
 };
