@@ -84,3 +84,11 @@ License
 -------
 
 MIT
+
+Changelog
+------------
+
+1.0.1(2014.9.3)
+
+- Add feature: projects > --tags, --commits, --branches and --tree.
+- Init. Basal feature.
