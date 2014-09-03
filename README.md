@@ -12,7 +12,7 @@ gitlab --help
 # For example
 gitlab url "http://example.com"
 gitlab token "abcdefghij123456"
-gitlab users --current
+gitlab me
 
 id name    username
 9  Cao Jun mdsb100
