@@ -18,44 +18,37 @@ program.command("me")
 .description("Get current user")
 .action(worker.users.current)
 
-program.command("projects")
+projects = program.command("projects")
 .description("Get projects from gitlab")
 .option("--id <projectId>", "Project id")
-.option("--members", "Get members by id from project")
-.option("--show", "Get project by id from gitlab")
-.option("--branches", "Get retrive branches of a given project")
-.option("--commits", "Get retrive commits of a given project")
-.option("--tags", "Get retrive tags of a given project")
-.option("--tree", "Get retrive tree of a given project")
-.action( (options) ->
-  hasOptions = false
+.action( (cmd, options) ->
+  unless options?
+    options = cmd
+    cmd = null
 
-  if options.members? and typeof options.id is "string"
-    hasOptions = true
-    worker.projects.members.list options.id
-
-  if options.show? and typeof options.id is "string"
-    hasOptions = true
-    worker.projects.show options.id
-
-  if options.branches? and typeof options.id is "string"
-    hasOptions = true
-    worker.projects.repository.branches options.id
-
-  if options.commits? and typeof options.id is "string"
-    hasOptions = true
-    worker.projects.repository.commits options.id
-
-  if options.tags? and typeof options.id is "string"
-    hasOptions = true
-    worker.projects.repository.tags options.id
-
-  if options.tree? and typeof options.id is "string"
-    hasOptions = true
-    worker.projects.repository.tree options.id
-
-  worker.projects.all() unless hasOptions
+  if cmd?
+    if options.id?
+      map = 
+        members: worker.projects.members.list
+        show: worker.projects.show
+        branches: worker.projects.repository.branches
+        commits: worker.projects.repository.commits
+        tags: worker.projects.repository.tags
+      if map[cmd]?
+        map[cmd](options.id)
+      else
+        console.log "  error: command %s missing", cmd 
+    else
+      console.log "  error: option `--id <projectId>' argument missing"
+  else
+    worker.projects.all()
 )
+projects.command("members", "Get members by id from project")
+projects.command("show", "Get project by id from gitlab")
+projects.command("branches", "Get retrive branches of a given project")
+projects.command("commits", "Get retrive commits of a given project")
+projects.command("tags", "Get retrive tags of a given project")
+projects.command("tree", "Get retrive tree of a given project")
 
 program.command("users")
 .description("Get users from gitlab")
