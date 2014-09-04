@@ -50,23 +50,30 @@ projects.command("commits", "Get retrive commits of a given project")
 projects.command("tags", "Get retrive tags of a given project")
 projects.command("tree", "Get retrive tree of a given project")
 
-program.command("users")
+users = program.command("users")
 .description("Get users from gitlab")
-.option("--current", "Get current user")
-.option("--show <userId>", "Show user by user id")
-.action( (options) ->
-  hasOptions = false
+.action( (cmd) ->
+  argLen = arguments.length
+  if typeof arguments[0] is "object"
+    cmd = null
+  options = arguments[argLen-1]
 
-  if options.current?
-    hasOptions = true
-    worker.users.current()
-
-  if typeof options.show is "string"
-    hasOptions = true
-    worker.users.show options.show
-
-  worker.users.all() unless hasOptions
+  if cmd?
+    if cmd is "current"
+      worker.users.current()
+    else if cmd is "show"
+      userId = if typeof arguments[1] isnt "object" then arguments[1] else null
+      if userId?
+          worker.users.show(userId)
+      else
+        console.log "  error: `show <userId>' argument missing"
+    else
+      console.log "  error: command %s missing", cmd 
+  else
+    worker.users.all()
 )
+users.command("current", "Get current user")
+users.command("show <userId>", "Show user by user id")
 
 program.command("issues")
 .description("Get issues from gitlab")
