@@ -28,12 +28,12 @@ gitlab table-head
 type of table head: [ 'user', 'project', 'issue' ]
 
 # To see table head
-gitlab table-head --get --type user
+gitlab table-head get --type user
 
 [ 'id', 'name', 'username' ]
 
 # To see origin table head
-gitlab table-head --origin --type user
+gitlab table-head getOrigin --type user
 
 [ 'id',
   'name',
@@ -57,12 +57,12 @@ gitlab table-head --origin --type user
   'private_token' ]
 
 # Add a head
-gitlab table-head --add state --type user
-gitlab table-head --get --type user
+gitlab table-head add state --type user
+gitlab table-head get --type user
 
 [ 'id', 'name', 'username', 'state' ]
 
-gitlab users --current
+gitlab users me
 
 id name    username state
 9  Cao Jun mdsb100  active

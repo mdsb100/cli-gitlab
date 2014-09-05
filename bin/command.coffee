@@ -79,42 +79,42 @@ program.command("issues")
 .description("Get issues from gitlab")
 .action(worker.issues.all)
 
-program.command("table-head")
-.description("Control output. Get origin, get, set, remove or add head")
+tablehead = program.command("table-head")
 .option("--type <type>", "Type of table head [user]")
-.option("--origin", "Get origin table head by type")
-.option("--set <head1,head2>", "Set and store table head by type. Example: gitlab table-head --set 'id','name','username' --type user")
-.option("--get", "Get table head by type")
-.option("--add <column>", "Add a head to table")
-.option("--remove <column>", "Remove a head to table")
-.option("--reset", "Reset table head to origin")
-.action( (options) ->
-  hasOptions = false
-
-  if options.origin?
-    hasOptions = true
-    worker.tableHead.getOrigin options.type
-
-  if typeof options.set is "string" and typeof options.type is "string"
-    hasOptions = true
-    worker.tableHead.set options.type, options.set.trim().split(",")
-  else if options.get and typeof options.type is "string"
-    hasOptions = true
-    worker.tableHead.get options.type
-
-  if typeof options.add is "string" and typeof options.type is "string"
-    hasOptions = true
-    worker.tableHead.add options.type, options.add
-  else if typeof options.remove is "string" and typeof options.type is "string"
-    hasOptions = true
-    worker.tableHead.remove options.type, options.remove
-
-  if options.reset and typeof options.type is "string"
-    hasOptions = true
-    worker.tableHead.reset options.type
-
-  worker.tableHead.getType() unless hasOptions
+.description("Control output. Get origin, get, set, remove or add head")
+.action( (cmd) ->
+  argLen = arguments.length
+  if typeof arguments[0] is "object"
+    cmd = null
+  options = arguments[argLen-1]
+  if cmd?
+    if options.type?
+      cmdParam = if typeof arguments[1] isnt "object" then arguments[1] else null
+      switch cmd
+        when "set"
+          if cmdParam?
+            worker.tableHead.set options.type, cmdParam.trim().split(",")
+          else
+            console.log "  error: `set <head1,head2>' argument missing"
+        when "get", "reset", "getOrigin"
+            worker.tableHead[cmd] options.type
+        when "remove", "add"
+          if cmdParam?
+            worker.tableHead[cmd] options.type, cmdParam
+          else
+            console.log "  error: `#{options.type} <column>' argument missing"
+            
+    else
+      console.log "  error: `--type <type>' argument missing"
+  else
+    worker.tableHead.getType()
 )
+tablehead.command("getOrigin", "Get origin table head by type")
+tablehead.command("set <head1,head2>", "Set and store table head by type. Example: gitlab table-head set 'id','name','username' --type user")
+tablehead.command("get", "Get table head by type")
+tablehead.command("add <column>", "Add a head to table")
+tablehead.command("remove <column>", "Remove a head to table")
+tablehead.command("reset", "Reset table head to origin")
 
 program.parse process.argv
 
