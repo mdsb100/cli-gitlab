@@ -75,9 +75,17 @@ users = program.command("users")
 users.command("current", "Get current user")
 users.command("show <userId>", "Show user by user id")
 
-program.command("issues")
+issues = program.command("issues")
 .description("Get issues from gitlab")
-.action(worker.issues.all)
+.action( (cmd) ->
+  argLen = arguments.length
+  if typeof arguments[0] is "object"
+    cmd = null
+  options = arguments[argLen-1]
+  if cmd?
+  else
+    worker.issues.all()
+)
 
 tablehead = program.command("table-head")
 .option("--type <type>", "Type of table head [user]")
