@@ -1,20 +1,14 @@
 nconf = require("nconf")
 fs = require("fs")
 path = require("path")
-cliff = require("cliff");
+_ = require("underscore")
+stringify = require("json-stable-stringify")
 
 gitlabDircPath = path.join(process.env[(if process.platform is "win32" then "USERPROFILE" else "HOME")], ".gitlab")
 fs.mkdirSync gitlabDircPath  unless fs.existsSync(gitlabDircPath)
 configFilePath = path.join(gitlabDircPath, "config.json")
 nconf.file file: configFilePath
-nconf.defaults
-  "table_head_user": JSON.stringify(["id", "name", "username", "state", "email", "created_at"])
-  "table_head_project": JSON.stringify(["id", "name", "public", "archived", "visibility_level", "issues_enabled", "wiki_enabled", "created_at", "last_activity_at"])
-  "table_head_issue": JSON.stringify(["id", "iid", "project_id", "title", "description", "state", "created_at", "updated_at", "labels", "assignee", "author"])
-  "table_head_commite": JSON.stringify(["id", "title", "author_name", "created_at"])
 gitlab = null
-
-tableHeadType = ["user", "project", "issue", "commite"]
 
 checkOptions = ->
   unless nconf.get("url")
@@ -25,45 +19,8 @@ checkOptions = ->
     return false
   true
 
-makeTableByData = (datas, table_head) ->
-  if datas.constructor is Array and not datas.length
-    return console.log("No Datas Or No Permission")
-  else if datas.constructor isnt Array
-    datas = [datas]
-
-  unless table_head?
-    table_head = getTableHeadByData(datas[0])
-
-  rows = [ table_head ]
-  for data in datas
-    row = []
-    rows.push row
-    for key in table_head
-      value = data[key]
-      value = value.name or value.id if value? and typeof value is "object"
-      row.push value or ""
-
-  console.log cliff.stringifyRows(rows)
-
-makeTableByUser = (data) ->
-  makeTableByData data, JSON.parse(nconf.get "table_head_user")
-
-makeTableByProject = (data) ->
-  makeTableByData data, JSON.parse(nconf.get "table_head_project")
-
-makeTableByIssue = (data) ->
-  makeTableByData data, JSON.parse(nconf.get "table_head_issue")
-
-getTableHeadByData = (data) ->
-  table_head = []
-  # Make id is first
-  if data? and data.constructor is Array
-    for key in data
-      if key isnt "id" then table_head.push(key) else table_head.unshift(key)
-  else
-    for key of data
-      if key isnt "id" then table_head.push(key) else table_head.unshift(key)
-  return table_head
+stringifyFormat = (data) ->
+  console.log(stringify(data, {space: 2})) if data?
 
 requireOrGetGitlab = ->
   if gitlab?
@@ -75,134 +32,6 @@ requireOrGetGitlab = ->
         token: nconf.get("token")
       )
       gitlab
-
-getGitlabDataTypeMap = (type="user") ->
-  gitlab = requireOrGetGitlab()
-  map =
-    "user": gitlab.users.current
-    "project": (callback) ->
-      gitlab.projects.all (projects) ->
-        callback(projects[0])
-    "issue": (callback) ->
-      gitlab.issues.all (issues) ->
-        callback(issues[0])
-
-  map[type] or map["user"]
-
-exports.users =
-  all: ->
-    requireOrGetGitlab().users.all (users) ->
-      users.sort (user1, user2) ->
-        parseInt(user1.id) - parseInt(user2.id)
-
-      makeTableByUser users
-
-  current: ->
-    requireOrGetGitlab().users.current makeTableByUser
-
-  show: (userId) ->
-    requireOrGetGitlab().users.show userId, makeTableByUser
-
-exports.projects =
-  all: ->
-    requireOrGetGitlab().projects.all (projects) ->
-      projects.sort (project1, project2) ->
-        parseInt(project1.id) - parseInt(project2.id)
-
-      makeTableByProject projects
-
-  show: (userId) ->
-    requireOrGetGitlab().projects.show userId, makeTableByProject
-
-  members:
-    list: (projectId) ->
-      requireOrGetGitlab().projects.members.list projectId, makeTableByUser
-  repository:
-    branches: (projectId) ->
-      requireOrGetGitlab().projects.repository.listBranches projectId, makeTableByData
-    commits: (projectId) ->
-      requireOrGetGitlab().projects.repository.listCommits projectId, (commits) ->
-        makeTableByData commits, JSON.parse(nconf.get "table_head_user")
-    tags: (projectId) ->
-      requireOrGetGitlab().projects.repository.listTags projectId, makeTableByData
-    tree: (projectId) ->
-      requireOrGetGitlab().projects.repository.listTree projectId, makeTableByData
-
-exports.issues =
-  all: ->
-    requireOrGetGitlab().issues.all (issues) ->
-      issues.sort (issue1, issue2) ->
-        parseInt(issue1.id) - parseInt(issue2.id)
-
-      makeTableByIssue issues
-
-exports.tableHead =
-  checkTableHead: (table_head) ->
-    return  unless table_head? or table_head.constructor is Array or table_head.length
-    # Make id exists and id is first one in array
-    for key, index in table_head
-      table_head[index] = (key+"").trim()
-
-    for key, index in table_head
-      if key is "id"
-        temp = table_head[0]
-        table_head[0] = table_head[index]
-        table_head[index] = temp
-        return table_head
-
-    table_head[0] = "id"
-    return table_head
-
-  set: (type, table_head) ->
-    table_head = @checkTableHead(table_head)
-    if table_head?
-      nconf.set "table_head_#{type}", JSON.stringify(table_head)
-      nconf.save()
-      console.log "Save #{type} table head"
-    else
-      console.log "Can not save #{type} table head, please check it"
-
-  get: (type) ->
-    table_head = nconf.get("table_head_#{type}")
-    if table_head?
-      console.log(JSON.parse(table_head))
-    else
-      console.log("Can not find #{type} table head")
-
-  add: (type, column) ->
-    table_head = nconf.get("table_head_#{type}")
-    if table_head?
-      table_head = JSON.parse(table_head)
-      if table_head.indexOf(column) < 0
-        table_head.push(column)
-        @set(type, table_head)
-
-  remove: (type, column) ->
-    table_head = nconf.get("table_head_#{type}")
-    if table_head?
-      table_head = JSON.parse(table_head)
-      index = table_head.indexOf(column)
-      if index > -1
-        table_head.splice(index, 1)
-        @set(type, table_head)
-
-  reset: (type) ->
-    getGitlabDataTypeMap(type)?( (data) ->
-      exports.tableHead.set(type, getTableHeadByData(data)) if data?
-    )
-
-  getType: ->
-    console.log("type of table head:", tableHeadType)
-
-  getOrigin: (type) ->
-    fn = getGitlabDataTypeMap(type)
-
-    if fn?
-      fn (data) ->
-        return console.log("Can not get this type data") unless data?
-        console.log(getTableHeadByData(data))
-    else
-      console.log "Error type:%j", type
 
 exports.url = (url) ->
   if url?
@@ -224,3 +53,437 @@ exports.getOption = ->
   opitons = nconf.get()
   for key,value of opitons
     console.log "#{key}:#{value}"
+
+map =
+  #Groups
+  "groups":
+    options: 
+      "per_page": {
+        param: "[per_page]"
+        alias: "e"
+        desc: "The limit of list."
+        type: true
+        index: 0
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "The offset of list."
+        type: true
+        index: 0
+      }
+    desc: "Get retrive groups from gitlab."
+    nameSpaces: "groups.all"
+    callback: stringifyFormat
+  "showGroup":
+    param: [
+      "<groupId>"
+    ]
+    desc: "Get retrive group fo a given group."
+    nameSpaces: "groups.show"
+    callback: stringifyFormat
+  "showGroupProjects":
+    param: [
+      "<groupId>"
+    ]
+    desc: "Get retrive projects fo a given group."
+    nameSpaces: "groups.listProjects"
+    callback: stringifyFormat
+  "showGroupMembers":
+    param: [
+      "<groupId>"
+    ]
+    desc: "Get retrive memebers fo a given group."
+    nameSpaces: "groups.listProjects"
+    callback: stringifyFormat
+
+  #Issues
+  "issues":
+    desc: "Get retrive issues from gitlab."
+    nameSpaces: "issues.all"
+    callback: stringifyFormat
+  "showIssue":
+    param: [
+      "<projectId>"
+      "<issueId>"
+    ]
+    desc: "Get retrive issue fo a given project and a given issue."
+    nameSpaces: "issues.show"
+    callback: stringifyFormat
+  #todo create
+  #todo edit
+
+  #ProjectDeployKeys
+  "keys":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive keys fo a given project."
+    nameSpaces: "projects.deploy_keys.listKeys"
+    callback: stringifyFormat
+  "getKey":
+    param: [
+      "<projectId>"
+      "<keyId>"
+    ]
+    desc: "Get retrive keys fo a given project and a give key."
+    nameSpaces: "projects.deploy_keys.getKey"
+    callback: stringifyFormat
+  #to addKey
+
+  #ProjectHooks
+  "hooks":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive hooks fo a given project."
+    nameSpaces: "projects.hooks.list"
+    callback: stringifyFormat
+  "showHook":
+    param: [
+      "<projectId>"
+      "<hookId>"
+    ]
+    desc: "Get retrive hook fo a given project and a give hook."
+    nameSpaces: "projects.hooks.show"
+    callback: stringifyFormat
+  "addHook":
+    param: [
+      "<projectId>"
+      "<url>"
+    ]
+    desc: "Add hook by a given porject id and url."
+    nameSpaces: "projects.hooks.add"
+    callback: stringifyFormat
+  "updateHook":
+    param: [
+      "<projectId>"
+      "<hookId>"
+      "<url>"
+    ]
+    desc: "Update hook by a given porject id, a given hook id and url."
+    nameSpaces: "projects.hooks.update"
+    callback: stringifyFormat
+  "removeHook":
+    param: [
+      "<projectId>"
+      "<hookId>"
+    ]
+    desc: "Remove hook by a given porject id abd a given hook id."
+    nameSpaces: "projects.hooks.remove"
+    callback: stringifyFormat
+
+  #ProjectIssue
+  "projectIssues":
+    param: [
+      "<projectId>"
+    ]
+    options: 
+      "per_page": {
+        param: "[per_page]"
+        alias: "e"
+        desc: "The limit of list."
+        type: true
+        index: 1
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "The offset of list."
+        type: true
+        index: 1
+      }
+    desc: "Get retrive issue fo a given project."
+    nameSpaces: "projects.issues.list"
+    callback: stringifyFormat
+
+  #ProjectMembers
+  "members":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive members fo a given project."
+    nameSpaces: "projects.members.list"
+    callback: stringifyFormat
+  "showMember":
+    param: [
+      "<projectId>"
+      "<userId>"
+    ]
+    desc: "Get retrive member fo a given project and a give user."
+    nameSpaces: "projects.members.show"
+    callback: stringifyFormat
+  "addMember":
+    param: [
+      "<projectId>"
+      "<userId>"
+      "[accessLevel]"
+    ]
+    desc: "Add member by a given porject id and user id. Default of access level is 30."
+    nameSpaces: "projects.members.add"
+    callback: stringifyFormat
+  #todo updatemember
+  "removeMember":
+    param: [
+      "<projectId>"
+      "<userId>"
+    ]
+    desc: "Remove member by a given porject id and user id."
+    nameSpaces: "projects.members.remove"
+    callback: stringifyFormat
+
+  #ProjectMergeRequests
+  "mergeRequests":
+    param: [
+      "<projectId>"
+    ]
+    options: 
+      "per_page": {
+        param: "[per_page]"
+        alias: "e"
+        desc: "The limit of list."
+        type: true
+        index: 1
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "The offset of list."
+        type: true
+        index: 1
+      }
+    desc: "Get retrive merge requests fo a given project."
+    nameSpaces: "projects.merge_requests.list"
+    callback: stringifyFormat
+  "showMergeRequest":
+    param: [
+      "<projectId>"
+      "<mergeRequestId>"
+    ]
+    desc: "Get retrive merge request fo a given project and a merge request."
+    nameSpaces: "projects.merge_requests.show"
+    callback: stringifyFormat
+  "addMergeRequest":
+    param: [
+      "<projectId>"
+      "<sourceBranch>"
+      "<targetBranch>"
+      "<assigneeId>"
+      "<title>"
+    ]
+    desc: "Add merge request by list of parameters."
+    nameSpaces: "projects.merge_requests.add"
+    callback: stringifyFormat
+  "updateMergeRequest":
+    param: [
+      "<projectId>"
+      "<mergeRequestId>"
+      "[accessLevel]"
+    ]
+    desc: "Update merge request fo a given project and a merge request. Default of access level is 30."
+    nameSpaces: "projects.merge_requests.update"
+    callback: stringifyFormat
+  "commentMergeRequest":
+    param: [
+      "<projectId>"
+      "<mergeRequestId>"
+      "<note>"
+    ]
+    desc: "Comment  merge request by a given porject id, note and a merge request."
+    nameSpaces: "projects.merge_requests.comment"
+    callback: stringifyFormat
+
+  #ProjectMilestones
+  "milestones":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive milestones fo a given project."
+    nameSpaces: "projects.milestones.list"
+    callback: stringifyFormat
+  "showMilestones":
+    param: [
+      "<projectId>"
+      "<milestoneId>"
+    ]
+    desc: "Get retrive merge request fo a given project and a milestone."
+    nameSpaces: "projects.milestones.show"
+    callback: stringifyFormat
+  "addMilestones":
+    param: [
+      "<projectId>"
+      "<title>"
+      "<description>"
+      "<due_date>"
+    ]
+    desc: "Add milestones by list of parameters."
+    nameSpaces: "projects.milestones.add"
+    callback: stringifyFormat
+  "updateMilestones":
+    param: [
+      "<projectId>"
+      "<milestoneId>"
+      "<title>"
+      "<description>"
+      "<due_date>"
+      "state_event"
+    ]
+    desc: "Update milestones by list of parameters."
+    nameSpaces: "projects.milestones.update"
+    callback: stringifyFormat
+
+  #ProjectRepository
+  "listBranches":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive branches of a given project."
+    nameSpaces: "projects.repository.listBranches"
+    callback: stringifyFormat    
+
+  "showBranch":
+    param: [
+      "<projectId>",
+      "<branchId>"
+    ]
+    desc: "Get retrive branche of a given project and a branch id."
+    nameSpaces: "projects.repository.showBranch"
+    callback: stringifyFormat
+
+  "listTags":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive list tags of a given project."
+    nameSpaces: "projects.repository.listTags"
+    callback: stringifyFormat
+
+  "listCommits":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get retrive list commits of a given project."
+    nameSpaces: "projects.repository.listCommits"
+    callback: stringifyFormat
+
+  "showCommit":
+    param: [
+      "<projectId>",
+      "<commitId>"
+    ]
+    desc: "Get retrive commit of a given project and a commit id."
+    nameSpaces: "projects.repository.showCommit"
+    callback: stringifyFormat
+
+  "diffCommit":
+    param: [
+      "<projectId>",
+      "<sha>"
+    ]
+    desc: "Diff commit of a given project and sha."
+    nameSpaces: "projects.repository.diffCommit"
+    callback: stringifyFormat
+
+  #todo listTree
+  #todo showFile
+  #todo createFile
+  #todo updateFile
+
+  #Project
+  "projects":
+    options: 
+      "per_page": {
+        param: "[per_page]"
+        alias: "e"
+        desc: "The limit of list."
+        type: true
+        index: 0
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "The offset of list."
+        type: true
+        index: 0
+      }
+    desc: "Get retrive projects."
+    nameSpaces: "projects.all"
+    callback: stringifyFormat
+
+  #ProjectUsers
+  "users":
+    desc: "Get retrive users from gitlab."
+    nameSpaces: "users.all"
+    callback: stringifyFormat
+  "me":
+    desc: "About me."
+    nameSpaces: "users.current"
+    callback: stringifyFormat
+  "showUser":
+    param: [
+      "<userId>"
+    ]
+    desc: "Show users by user id."
+    nameSpaces: "users.show"
+    callback: stringifyFormat
+  #todo create
+  "session":
+    param: [
+      "<email>"
+      "<password>"
+    ]
+    desc: "Get session by email and password."
+    nameSpaces: "users.session"
+    callback: stringifyFormat
+
+
+exports.createOptions =  (program, param) ->    
+  for key, value of param
+    program.option( (if value.alias? then "-#{value.alias}," else "" )+" --#{key} #{value.param}", value.desc )
+
+exports.createParam = (params) ->
+  return "" unless params?
+  ret = []
+  for item in params
+    ret.push item
+  ret.join(" ")
+
+exports.createCommands = (program) ->
+  _.forEach map, (cmd, key) ->
+    command = program.command("#{key} #{exports.createParam(cmd.param)}")
+    command.description(cmd.desc)
+
+    exports.createOptions(command, cmd.options) if cmd.options?
+
+    command.action( ->
+      options = arguments[arguments.length - 1] or {}
+      arg = []
+
+      if cmd.param? and typeof arguments[0] isnt "object"
+        i = 0
+        while typeof arguments[i] isnt "object"
+          arg.push arguments[i]
+          i++
+
+      for key, value of cmd.options
+        if value.type
+          unless arg[value.index]?
+            arg[value.index] = {}
+          arg[value.index][key] = options[key]
+        else
+          arg[value.index] = options[key]
+
+      target = requireOrGetGitlab()
+
+      nameSpaces = cmd.nameSpaces.split(".")
+
+      fn = nameSpaces.pop()
+
+      if cmd.callback
+        arg.push(cmd.callback)
+
+      for name in nameSpaces
+        target = target[name]
+
+      target[fn].apply(target, arg)
+    )

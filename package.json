@@ -2,7 +2,7 @@
   "name": "cli-gitlab",
   "version": "1.0.1",
   "description": "GitLab CLI library.",
-  "main": "bin/command.js",
+  "main": "bin/refine.js",
   "directories": {
 
   },
@@ -17,7 +17,8 @@
     "gitlab": "1.0.0",
     "commander": "latest",
     "nconf": "latest",
-    "cliff": "latest"
+    "underscore": "1.7.0",
+    "json-stable-stringify": "latest"
   },
   "devDependencies": {
     "coffee-script": "*"
