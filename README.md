@@ -14,61 +14,71 @@ gitlab url "http://example.com"
 gitlab token "abcdefghij123456"
 gitlab me
 
-id name    username
-9  Cao Jun mdsb100
+{
+  "avatar_url": "http://gitlab.baidao.com//uploads/user/avatar/9/764b89699bcc946e4239b04f28002ce9.jpeg",
+  "bio": "",
+  "can_create_group": true,
+  "can_create_project": true,
+  "color_scheme_id": 1,
+  "created_at": "2014-08-06T03:30:19.417Z",
+  "email": "jun.cao@baidao.com",
+  "extern_uid": null,
+  "id": 9,
+  "is_admin": false,
+  "linkedin": "",
+  "name": "Cao Jun",
+  "private_token": "6Xvkd6jicJwTq3rYWKsq",
+  "provider": null,
+  "skype": "",
+  "state": "active",
+  "theme_id": 2,
+  "twitter": "",
+  "username": "mdsb100",
+  "website_url": ""
+}
 
 ```
 
-Config CLI output?
-=====
-```bash
-# There are some types
-gitlab table-head
-
-type of table head: [ 'user', 'project', 'issue' ]
-
-# To see table head
-gitlab table-head get --type user
-
-[ 'id', 'name', 'username' ]
-
-# To see origin table head
-gitlab table-head getOrigin --type user
-
-[ 'id',
-  'name',
-  'username',
-  'state',
-  'avatar_url',
-  'created_at',
-  'is_admin',
-  'bio',
-  'skype',
-  'linkedin',
-  'twitter',
-  'website_url',
-  'email',
-  'theme_id',
-  'color_scheme_id',
-  'extern_uid',
-  'provider',
-  'can_create_group',
-  'can_create_project',
-  'private_token' ]
-
-# Add a head
-gitlab table-head add state --type user
-gitlab table-head get --type user
-
-[ 'id', 'name', 'username', 'state' ]
-
-gitlab users me
-
-id name    username state
-9  Cao Jun mdsb100  active
-
-# See "gitlab table-head --help" to see more commands.
-```
+List of commands
+----------------
+- groups
+- showGroup
+- showGroupProjects
+- showGroupMembers
+- issues
+- showIssue
+- keys
+- getKey
+- hooks 
+- showHook
+- addHook 
+- updateHook 
+- removeHook 
+- projectIssues 
+- members
+- showMember 
+- addMember
+- removeMember
+- mergeRequests
+- showMergeRequest
+- addMergeRequest
+- updateMergeRequest
+- commentMergeRequest
+- milestones
+- showMilestones
+- addMilestones
+- updateMilestones
+- listBranches
+- showBranch
+- listTags
+- listCommits
+- showCommit
+- diffCommit
+- projects
+- users
+- me
+- showUser
+- session
 
 Contributors
 ------------
@@ -88,7 +98,7 @@ MIT
 Changelog
 ------------
 
-1.0.1(2014.9.3)
-
+1.1.0(2014.9.26)
+- Refactor: Useinig a map to create commands.
 - Add feature: projects > --tags, --commits, --branches and --tree.
 - Init. Basal feature.
