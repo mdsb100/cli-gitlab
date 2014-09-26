@@ -448,3 +448,34 @@ exports.createCommands = function(program) {
     });
   });
 };
+
+exports.url = function(url) {
+  if (url != null) {
+    nconf.set("url", url);
+    nconf.save();
+    return console.log("Save url");
+  } else {
+    return console.log(nconf.get("url"));
+  }
+};
+
+exports.token = function(token) {
+  if (token != null) {
+    nconf.set("token", token);
+    nconf.save();
+    return console.log("Save token");
+  } else {
+    return console.log(nconf.get("token"));
+  }
+};
+
+exports.getOption = function() {
+  var key, opitons, value, _results;
+  opitons = nconf.get();
+  _results = [];
+  for (key in opitons) {
+    value = opitons[key];
+    _results.push(console.log("" + key + ":" + value));
+  }
+  return _results;
+};

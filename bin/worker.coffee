@@ -487,3 +487,24 @@ exports.createCommands = (program) ->
 
       target[fn].apply(target, arg)
     )
+
+exports.url = (url) ->
+  if url?
+    nconf.set "url", url
+    nconf.save()
+    console.log "Save url"
+  else
+    console.log nconf.get "url"
+
+exports.token = (token) ->
+  if token?
+    nconf.set "token", token
+    nconf.save()
+    console.log "Save token"
+  else
+    console.log nconf.get "token"
+
+exports.getOption = ->
+  opitons = nconf.get()
+  for key,value of opitons
+    console.log "#{key}:#{value}"
