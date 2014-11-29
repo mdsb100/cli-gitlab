@@ -12,10 +12,10 @@ gitlab = null
 
 checkOptions = ->
   unless nconf.get("url")
-    console.log "You should set url by 'gitlab --url http://example.com' "
+    console.log "You should set url by 'gitlab url http://example.com' "
     return false
   unless nconf.get("token")
-    console.log "You should set token by 'gitlab --token abcdefghij123456' "
+    console.log "You should set token by 'gitlab token abcdefghij123456' "
     return false
   true
 
