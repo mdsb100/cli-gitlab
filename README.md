@@ -39,7 +39,7 @@ gitlab me
 
 ```
 
-List of commands
+[List of commands](https://github.com/mdsb100/cli-gitlab/blob/master/bin/map.coffee)
 ----------------
 - groups
 - showGroup
@@ -49,14 +49,14 @@ List of commands
 - showIssue
 - keys
 - getKey
-- hooks 
+- hooks
 - showHook
-- addHook 
-- updateHook 
-- removeHook 
-- projectIssues 
+- addHook
+- updateHook
+- removeHook
+- projectIssues
 - members
-- showMember 
+- showMember
 - addMember
 - removeMember
 - mergeRequests
