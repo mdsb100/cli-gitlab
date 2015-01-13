@@ -98,7 +98,8 @@ MIT
 Changelog
 ------------
 
-1.1.0(2014.9.26)
+1.1.2(2015.1.14)
+- Add a map file.
 - Refactor: Useinig a map to create commands.
 - Add feature: projects > --tags, --commits, --branches and --tree.
 - Init. Basal feature.
