@@ -1,6 +1,7 @@
 program = require("commander")
 packageInfo = require("./../package.json")
 worker = require("./worker.js")
+map = require("./map.js")
 
 program.usage("[options]")
 .version(packageInfo.version)
@@ -14,7 +15,7 @@ program.command("token [token]")
 .description("Get or Set token of gitlab")
 .action(worker.token)
 
-worker.createCommands(program)
+worker.createCommands(map, program)
 
 program.parse process.argv
 
