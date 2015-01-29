@@ -80,6 +80,26 @@ gitlab me
 - showUser
 - session
 
+Options Usage
+=============
+```
+gitlab projectIssues --help
+
+Usage: projectIssues [options] <projectId>
+
+  Get retrive issue of a given project.
+
+  Options:
+
+    -h, --help                 output usage information
+    -e, --per_page [per_page]  The limit of list.
+    -p, --page [page]          The offset of list.
+
+
+gitlab projectIssues 10 -e 100 -p 1
+
+```
+
 Contributors
 ------------
 
