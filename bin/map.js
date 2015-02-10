@@ -153,9 +153,9 @@ module.exports = {
     param: ["<projectId>", "<issueId>"],
     options: {
       "title": {
-        param: "<title>",
+        param: "[title]",
         alias: "t",
-        desc: "(required) - The title of an issue.",
+        desc: "(optional) - The title of an issue.",
         type: true,
         index: 2
       },

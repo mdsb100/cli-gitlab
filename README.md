@@ -82,6 +82,8 @@ gitlab me
 - showUser
 - session
 
+## Refernce [issues](http://doc.gitlab.com/ce/api/issues.html)
+
 Issues Usage
 =============
 ```
@@ -156,7 +158,7 @@ Updates an existing project issue. This function is also used to mark an issue a
 Options:
 
   -h, --help                         output usage information
-  -t, --title <title>                (required) - The title of an issue.
+  -t, --title [title]                (optional) - The title of an issue.
   -d, --description [desc]           (optional) - The description of an issue.
   -a, --assignee_id [assignee_id]    (optional) - The ID of a user to assign issue.
   -m, --milestone_id [milestone_id]  (optional) - The ID of a milestone to assign issue.
@@ -212,8 +214,11 @@ MIT
 
 Changelog
 ------------
+1.1.4(2015.2.10)
+- Fix editIssue, change "title" to optional.
+
 1.1.3(2015.2.10)
-- Modify command of issues
+- Modify command of issues.
 
 1.1.2(2015.1.14)
 - Add a map file.
