@@ -48,7 +48,46 @@ module.exports =
 
   #Issues
   "issues":
-    desc: "Get retrive issues from gitlab."
+    options:
+      state:
+        param: "[state]"
+        alias: "s"
+        type: true
+        index: 0
+        desc: "(optional) - Return all issues or just those that are opened or closed"
+      labels:
+        param: "[labels]"
+        alias: "l"
+        type: true
+        index: 0
+        desc: "(optional) - Comma-separated list of label names"
+      order_by:
+        param: "[order_by]"
+        alias: "o"
+        type: true
+        index: 0
+        desc: "(optional) - Return requests ordered by created_at or updated_at fields. Default is created_at"
+      sort:
+        param: "[sort]"
+        alias: "d"
+        type: true
+        index: 0
+        desc: "(optional) - Return requests sorted in asc or desc order. Default is desc"
+      "per_page": {
+        param: "[per_page]"
+        alias: "e"
+        desc: "The limit of list."
+        type: true
+        index: 0
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "The offset of list."
+        type: true
+        index: 0
+      }
+    desc: "Get all issues created by authenticated user. This function takes pagination parameters page and per_page to restrict the list of issues."
     nameSpaces: "issues.all"
     callback: stringifyFormat
   "showIssue":
