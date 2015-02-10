@@ -239,8 +239,6 @@ MIT
 
 Changelog
 ------------
-1.1.5(2015.2.11)
-- Add function "filter".
 
 1.1.4(2015.2.10)
 - Fix editIssue, change "title" to optional.
