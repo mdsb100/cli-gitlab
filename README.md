@@ -86,6 +86,7 @@ Issues Usage
 =============
 ```
 gitlab issues --help
+
 Usage: issues [options]
 
   Get all issues created by authenticated user. This function takes pagination parameters page and per_page to restrict the list of issues.
@@ -101,6 +102,7 @@ Usage: issues [options]
     -p, --page [page]          (optional) - The offset of list.
 
 gitlab createIssue --help
+
 Usage: createIssue [options] <projectId>
 
 Creates a new project issue.If the operation is successful, 200 and the newly created issue is returned. If an error occurs, an error number and a message explaining the reason is returned.
@@ -115,6 +117,7 @@ Options:
   -l, --labels [labels]              (optional) - Comma-separated label names for an issue.
 
 gitlab createIssue 12 -t test -a 9
+
 {
   "assignee": {
     "avatar_url": "http://gitlab.baidao.com//uploads/user/avatar/9/764b89699bcc946e4239b04f28002ce9.jpeg",
@@ -145,6 +148,7 @@ gitlab createIssue 12 -t test -a 9
 
 
 gitlab editIssue --help
+
 Usage: editIssue [options] <projectId> <issueId>
 
 Updates an existing project issue. This function is also used to mark an issue as closed.If the operation is successful, 200 and the updated issue is returned. If an error occurs, an error number and a message explaining the reason is returned.
@@ -160,6 +164,7 @@ Options:
   -s, --state_event [state_event]    (optional) - The state event of an issue ('close' to close issue and 'reopen' to reopen it).
 
 gitlab editIssue 12 807 -t test_it -d totest
+
 {
   "assignee": {
     "avatar_url": "http://gitlab.baidao.com//uploads/user/avatar/9/764b89699bcc946e4239b04f28002ce9.jpeg",
