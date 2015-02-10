@@ -129,9 +129,13 @@ exports.createCommands = function(map, program) {
           if (arg[value.index] == null) {
             arg[value.index] = {};
           }
-          arg[value.index][key] = options[key];
+          if (options[key] != null) {
+            arg[value.index][key] = options[key];
+          }
         } else {
-          arg[value.index] = options[key];
+          if (options[key] != null) {
+            arg[value.index] = options[key];
+          }
         }
       }
       target = requireOrGetGitlab();

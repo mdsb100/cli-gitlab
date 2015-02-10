@@ -82,9 +82,9 @@ exports.createCommands = (map, program) ->
         if value.type
           unless arg[value.index]?
             arg[value.index] = {}
-          arg[value.index][key] = options[key]
+          arg[value.index][key] = options[key] if options[key]?
         else
-          arg[value.index] = options[key]
+          arg[value.index] = options[key] if options[key]?
 
       target = requireOrGetGitlab()
 
