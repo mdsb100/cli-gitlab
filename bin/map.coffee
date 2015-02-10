@@ -59,8 +59,100 @@ module.exports =
     desc: "Get retrive issue of a given project and a given issue."
     nameSpaces: "issues.show"
     callback: stringifyFormat
-  #todo create
-  #todo edit
+  "createIssue":
+    param: [
+      "<projectId>"
+    ]
+    options:
+      "title": {
+        param: "<title>"
+        alias: "t"
+        desc: "(required) - The title of an issue."
+        type: true
+        index: 1
+      }
+      "description": {
+        param: "[desc]"
+        alias: "d"
+        desc: "(optional) - The description of an issue."
+        type: true
+        index: 1
+      }
+      "assignee_id": {
+        param: "[assignee_id]"
+        alias: "a"
+        desc: "(optional) - The ID of a user to assign issue."
+        type: true
+        index: 1
+      }
+      "milestone_id": {
+        param: "[milestone_id]"
+        alias: "m"
+        desc: "(optional) - The ID of a milestone to assign issue."
+        type: true
+        index: 1
+      }
+      "labels": {
+        param: "[labels]"
+        alias: "l"
+        desc: "(optional) - Comma-separated label names for an issue."
+        type: true
+        index: 1
+      }
+    desc: "Creates a new project issue.If the operation is successful, 200 and the newly created issue is returned. If an error occurs, an error number and a message explaining the reason is returned."
+    nameSpaces: "issues.create"
+    callback: stringifyFormat
+  "editIssue":
+    param: [
+      "<projectId>"
+      "<issueId>"
+    ]
+    options:
+      "title": {
+        param: "<title>"
+        alias: "t"
+        desc: "(required) - The title of an issue."
+        type: true
+        index: 2
+      }
+      "description": {
+        param: "[desc]"
+        alias: "d"
+        desc: "(optional) - The description of an issue."
+        type: true
+        index: 2
+      }
+      "assignee_id": {
+        param: "[assignee_id]"
+        alias: "a"
+        desc: "(optional) - The ID of a user to assign issue."
+        type: true
+        index: 2
+      }
+      "milestone_id": {
+        param: "[milestone_id]"
+        alias: "m"
+        desc: "(optional) - The ID of a milestone to assign issue."
+        type: true
+        index: 2
+      }
+      "labels": {
+        param: "[labels]"
+        alias: "l"
+        desc: "(optional) - Comma-separated label names for an issue."
+        type: true
+        index: 2
+      }
+      "state_event": {
+        param: "[state_event]"
+        alias: "s"
+        desc: "(optional) - The state event of an issue ('close' to close issue and 'reopen' to reopen it)."
+        type: true
+        index: 2
+      }
+    desc: "Updates an existing project issue. This function is also used to mark an issue as closed.If the operation is successful, 200 and the updated issue is returned. If an error occurs, an error number and a message explaining the reason is returned."
+    nameSpaces: "issues.edit"
+    callback: stringifyFormat
 
   #ProjectDeployKeys
   "keys":
@@ -358,6 +450,13 @@ module.exports =
     desc: "Get retrive projects."
     nameSpaces: "projects.all"
     callback: stringifyFormat
+  #todo show
+  #todo create
+  #todo addMember
+  #todo editMember
+  #todo listMembers
+  #todo listCommits
+  #todo listTags
 
   #ProjectUsers
   "users":
