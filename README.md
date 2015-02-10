@@ -209,6 +209,7 @@ Changelog
 ------------
 1.1.3(2015.2.10)
 - Modify command of issues
+
 1.1.2(2015.1.14)
 - Add a map file.
 - Refactor: Useinig a map to create commands.
