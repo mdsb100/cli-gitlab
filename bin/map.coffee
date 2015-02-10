@@ -7,17 +7,17 @@ module.exports =
   #Groups
   "groups":
     options:
-      "per_page": {
+      per_page: {
         param: "[per_page]"
         alias: "e"
-        desc: "The limit of list."
+        desc: "(optional) - The limit of list."
         type: true
         index: 0
       }
       page: {
         param: "[page]"
         alias: "p"
-        desc: "The offset of list."
+        desc: "(optional) - The offset of list."
         type: true
         index: 0
       }
@@ -73,17 +73,17 @@ module.exports =
         type: true
         index: 0
         desc: "(optional) - Return requests sorted in asc or desc order. Default is desc"
-      "per_page": {
+      per_page: {
         param: "[per_page]"
         alias: "e"
-        desc: "The limit of list."
+        desc: "(optional) - The limit of list."
         type: true
         index: 0
       }
       page: {
         param: "[page]"
         alias: "p"
-        desc: "The offset of list."
+        desc: "(optional) - The offset of list."
         type: true
         index: 0
       }
@@ -259,21 +259,51 @@ module.exports =
       "<projectId>"
     ]
     options:
-      "per_page": {
+      state:
+        param: "[state]"
+        alias: "s"
+        type: true
+        index: 1
+        desc: "(optional) - Return all issues or just those that are opened or closed"
+      labels:
+        param: "[labels]"
+        alias: "l"
+        type: true
+        index: 1
+        desc: "(optional) - Comma-separated list of label names"
+      milestone:
+        param: "[milestone]"
+        alias: "m"
+        type: true
+        index: 1
+        desc: "milestone (optional) - Milestone title"
+      order_by:
+        param: "[order_by]"
+        alias: "o"
+        type: true
+        index: 1
+        desc: "(optional) - Return requests ordered by created_at or updated_at fields. Default is created_at"
+      sort:
+        param: "[sort]"
+        alias: "d"
+        type: true
+        index: 1
+        desc: "(optional) - Return requests sorted in asc or desc order. Default is desc"
+      per_page: {
         param: "[per_page]"
         alias: "e"
-        desc: "The limit of list."
+        desc: "(optional) - The limit of list."
         type: true
         index: 1
       }
       page: {
         param: "[page]"
         alias: "p"
-        desc: "The offset of list."
+        desc: "(optional) - The offset of list."
         type: true
         index: 1
       }
-    desc: "Get retrive issue of a given project."
+    desc: "Get a list of project issues. This function accepts pagination parameters page and per_page to return the list of project issues."
     nameSpaces: "projects.issues.list"
     callback: stringifyFormat
 
@@ -318,17 +348,17 @@ module.exports =
       "<projectId>"
     ]
     options:
-      "per_page": {
+      per_page: {
         param: "[per_page]"
         alias: "e"
-        desc: "The limit of list."
+        desc: "(optional) - The limit of list."
         type: true
         index: 1
       }
       page: {
         param: "[page]"
         alias: "p"
-        desc: "The offset of list."
+        desc: "(optional) - The offset of list."
         type: true
         index: 1
       }
@@ -472,17 +502,17 @@ module.exports =
   #Project
   "projects":
     options:
-      "per_page": {
+      per_page: {
         param: "[per_page]"
         alias: "e"
-        desc: "The limit of list."
+        desc: "(optional) - The limit of list."
         type: true
         index: 0
       }
       page: {
         param: "[page]"
         alias: "p"
-        desc: "The offset of list."
+        desc: "(optional) - The offset of list."
         type: true
         index: 0
       }
