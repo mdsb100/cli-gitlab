@@ -66,6 +66,12 @@ exports.createCommands = (map, program) ->
     command = program.command("#{key} #{exports.createParam(cmd.param)}")
     command.description(cmd.desc)
 
+    if cmd.filter is true
+      cmd.options.filter =
+        param: "[filter]"
+        type: true
+        desc: "(optional) - Filter result. For example: --filter 'item.assignee.id == 9' "
+
     exports.createOptions(command, cmd.options) if cmd.options?
 
     command.action( ->
@@ -79,6 +85,8 @@ exports.createCommands = (map, program) ->
           i++
 
       for key, value of cmd.options
+        unless value.index?
+          continue
         if value.type
           unless arg[value.index]?
             arg[value.index] = {}
@@ -92,12 +100,18 @@ exports.createCommands = (map, program) ->
 
       fn = nameSpaces.pop()
 
-      if cmd.callback
+      if cmd.callback?
+        if cmd.filter is true and options? and options.filter?
+          cmd.callback = _.wrap(cmd.callback, (fn, data) ->
+            evalFnString = "(function(item){ return #{options.filter}; });"
+            evalFn = eval(evalFnString)
+            data = _.filter(data, evalFn)
+            fn(data)
+          )
         arg.push(cmd.callback)
 
       for name in nameSpaces
         target = target[name]
-
       target[fn].apply(target, arg)
     )
 

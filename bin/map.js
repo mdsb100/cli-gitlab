@@ -52,6 +52,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "issues": {
+    filter: true,
     options: {
       state: {
         param: "[state]",
@@ -242,6 +243,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "projectIssues": {
+    filter: true,
     param: ["<projectId>"],
     options: {
       state: {

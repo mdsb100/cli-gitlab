@@ -82,27 +82,52 @@ gitlab me
 - showUser
 - session
 
-## Refernce [issues](http://doc.gitlab.com/ce/api/issues.html)
-
-Issues Usage
+Filter Usage
 =============
 ```
 gitlab issues --help
+--filter [filter]         (optional) - Filter result. For example: --filter 'item.assignee.id == 9'
 
-Usage: issues [options]
+# "item" means current object, so aways use "item.xx"
+gitlab issues --filter "item.author.id==9" -s closed
+[
+...
+{
+    "assignee": {
+      "avatar_url": "http://gitlab.baidao.com//uploads/user/avatar/9/764b89699bcc946e4239b04f28002ce9.jpeg",
+      "id": 9,
+      "name": "Cao Jun",
+      "state": "active",
+      "username": "mdsb100"
+    },
+    "author": {
+      "avatar_url": "http://gitlab.baidao.com//uploads/user/avatar/9/764b89699bcc946e4239b04f28002ce9.jpeg",
+      "id": 9,
+      "name": "Cao Jun",
+      "state": "active",
+      "username": "mdsb100"
+    },
+    "created_at": "2014-08-14T06:28:20.398Z",
+    "description": "测试一下",
+    "id": 2,
+    "iid": 1,
+    "labels": [
+    ],
+    "milestone": null,
+    "project_id": 10,
+    "state": "closed",
+    "title": "Test Issue",
+    "updated_at": "2014-08-15T10:25:31.588Z"
+  },
+...
+]
 
-  Get all issues created by authenticated user. This function takes pagination parameters page and per_page to restrict the list of issues.
+```
 
-  Options:
-
-    -h, --help                 output usage information
-    -s, --state [state]        (optional) - Return all issues or just those that are opened or closed
-    -l, --labels [labels]      (optional) - Comma-separated list of label names
-    -o, --order_by [order_by]  (optional) - Return requests ordered by created_at or updated_at fields. Default is created_at
-    -d, --sort [sort]          (optional) - Return requests sorted in asc or desc order. Default is desc
-    -e, --per_page [per_page]  (optional) - The limit of list.
-    -p, --page [page]          (optional) - The offset of list.
-
+Issues Usage
+=============
+## Refernce [issues](http://doc.gitlab.com/ce/api/issues.html)
+```
 gitlab createIssue --help
 
 Usage: createIssue [options] <projectId>
@@ -214,6 +239,9 @@ MIT
 
 Changelog
 ------------
+1.1.5(2015.2.11)
+- Add function "filter".
+
 1.1.4(2015.2.10)
 - Fix editIssue, change "title" to optional.
 

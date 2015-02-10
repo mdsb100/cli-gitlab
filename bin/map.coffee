@@ -48,6 +48,7 @@ module.exports =
 
   #Issues
   "issues":
+    filter: true
     options:
       state:
         param: "[state]"
@@ -255,6 +256,7 @@ module.exports =
 
   #ProjectIssue
   "projectIssues":
+    filter: true
     param: [
       "<projectId>"
     ]

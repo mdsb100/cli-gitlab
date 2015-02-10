@@ -108,6 +108,13 @@ exports.createCommands = function(map, program) {
     var command;
     command = program.command("" + key + " " + (exports.createParam(cmd.param)));
     command.description(cmd.desc);
+    if (cmd.filter === true) {
+      cmd.options.filter = {
+        param: "[filter]",
+        type: true,
+        desc: "(optional) - Filter result. For example: --filter 'item.assignee.id == 9' "
+      };
+    }
     if (cmd.options != null) {
       exports.createOptions(command, cmd.options);
     }
@@ -125,6 +132,9 @@ exports.createCommands = function(map, program) {
       _ref = cmd.options;
       for (key in _ref) {
         value = _ref[key];
+        if (value.index == null) {
+          continue;
+        }
         if (value.type) {
           if (arg[value.index] == null) {
             arg[value.index] = {};
@@ -141,7 +151,16 @@ exports.createCommands = function(map, program) {
       target = requireOrGetGitlab();
       nameSpaces = cmd.nameSpaces.split(".");
       fn = nameSpaces.pop();
-      if (cmd.callback) {
+      if (cmd.callback != null) {
+        if (cmd.filter === true && (options != null) && (options.filter != null)) {
+          cmd.callback = _.wrap(cmd.callback, function(fn, data) {
+            var evalFn, evalFnString;
+            evalFnString = "(function(item){ return " + options.filter + "; });";
+            evalFn = eval(evalFnString);
+            data = _.filter(data, evalFn);
+            return fn(data);
+          });
+        }
         arg.push(cmd.callback);
       }
       for (_i = 0, _len = nameSpaces.length; _i < _len; _i++) {
