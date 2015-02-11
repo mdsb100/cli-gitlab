@@ -71,7 +71,7 @@ exports.getOption = ->
 
 exports.createOptions =  (program, param) ->
   for key, value of param
-    program.option( (if value.alias? then "-#{value.alias}," else "" )+" --#{key} #{value.param}", value.desc )
+    program.option( (if value.alias? then "-#{value.alias}," else "" )+" --#{key} #{if value.param? then value.param else ''}", value.desc )
 
 exports.createParam = (params) ->
   return "" unless params?
@@ -87,19 +87,16 @@ exports.createCommands = (map, program) ->
 
     if cmd.assigned_to_me?
       cmd.options.assigned_to_me =
-        param: "[assigned_to_me]"
         type: true
         desc: "(optional) - Filter result if assigned to me."
 
     if cmd.created_by_me?
       cmd.options.created_by_me =
-        param: "[created_by_me]"
         type: true
         desc: "(optional) - Filter result if created by me."
 
     if cmd.size?
       cmd.options.size =
-        param: "[size]"
         type: true
         desc: "(optional) - Output size of result."
 

@@ -112,7 +112,7 @@ exports.createOptions = function(program, param) {
   _results = [];
   for (key in param) {
     value = param[key];
-    _results.push(program.option((value.alias != null ? "-" + value.alias + "," : "") + (" --" + key + " " + value.param), value.desc));
+    _results.push(program.option((value.alias != null ? "-" + value.alias + "," : "") + (" --" + key + " " + (value.param != null ? value.param : '')), value.desc));
   }
   return _results;
 };
@@ -137,21 +137,18 @@ exports.createCommands = function(map, program) {
     command.description(cmd.desc);
     if (cmd.assigned_to_me != null) {
       cmd.options.assigned_to_me = {
-        param: "[assigned_to_me]",
         type: true,
         desc: "(optional) - Filter result if assigned to me."
       };
     }
     if (cmd.created_by_me != null) {
       cmd.options.created_by_me = {
-        param: "[created_by_me]",
         type: true,
         desc: "(optional) - Filter result if created by me."
       };
     }
     if (cmd.size != null) {
       cmd.options.size = {
-        param: "[size]",
         type: true,
         desc: "(optional) - Output size of result."
       };
