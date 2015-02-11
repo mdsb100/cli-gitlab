@@ -1,6 +1,6 @@
 {
   "name": "cli-gitlab",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "GitLab CLI library.",
   "main": "bin/refine.js",
   "directories": {
