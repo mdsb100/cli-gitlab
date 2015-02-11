@@ -1,6 +1,6 @@
 cli-gitlab
 ===========
-Forked from [node-gitlab](https://github.com/moul/node-gitlab)
+Check [node-gitlab](https://github.com/moul/node-gitlab)
 
 Quick Start
 =====
@@ -286,10 +286,6 @@ gitlab editIssue 12 807 -t test_it -d totest
 - me
 - showUser
 - session
-
-Contributors
-------------
-- [mdsb100](https://github.com/mdsb100)
 
 Thank
 ------------
