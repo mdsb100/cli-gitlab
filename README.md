@@ -51,7 +51,7 @@ gitlab issues --help
      --assigned_to_me          (optional) - Filter result if assigned to me.
      --created_by_me           (optional) - Filter result if created by me.
      --size [size]             (optional) - Output size of result.
-     --filter [filter]         (optional) - Filter result. For example: --filter 'item.assignee.id == 9'
+     --filter <filter>         (required) - Filter result. For example: --filter 'item.assignee.id == 9'
 ```
 
 ```

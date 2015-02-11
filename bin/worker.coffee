@@ -102,11 +102,11 @@ exports.createCommands = (map, program) ->
 
     if cmd.filter is true
       cmd.options.filter =
-        param: "[filter]"
+        param: "<filter>"
         type: true
-        desc: "(optional) - Filter result. For example: --filter 'item.assignee.id == 9' "
+        desc: "(required) - Filter result. For example: --filter 'item.assignee.id == 9' "
 
-    exports.createOptions(command, cmd.options) if cmd.options?
+    exports.createOptions(command, cmd.options)
 
     command.action( ->
       options = arguments[arguments.length - 1] or {}

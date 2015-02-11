@@ -155,14 +155,12 @@ exports.createCommands = function(map, program) {
     }
     if (cmd.filter === true) {
       cmd.options.filter = {
-        param: "[filter]",
+        param: "<filter>",
         type: true,
-        desc: "(optional) - Filter result. For example: --filter 'item.assignee.id == 9' "
+        desc: "(required) - Filter result. For example: --filter 'item.assignee.id == 9' "
       };
     }
-    if (cmd.options != null) {
-      exports.createOptions(command, cmd.options);
-    }
+    exports.createOptions(command, cmd.options);
     return command.action(function() {
       var arg, callback, fn, i, name, nameSpaces, options, target, value, _i, _len, _ref;
       options = arguments[arguments.length - 1] || {};
