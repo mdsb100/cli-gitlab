@@ -3,6 +3,14 @@ stringify = require("json-stable-stringify")
 stringifyFormat = (data) ->
   console.log(stringify(data, {space: 2})) if data?
 
+groupCustomHelp = ->
+  console.log "  access_levels"
+  console.log "    GUEST:      10"
+  console.log "    REPORTER:   20"
+  console.log "    DEVELOPER:  30"
+  console.log "    MASTER:     40"
+  console.log "    OWNER:      50"
+
 module.exports =
   #Groups
   "groups":
@@ -46,6 +54,7 @@ module.exports =
     param: [
       "<group_id>"
     ]
+    help: groupCustomHelp
     desc: "Get retrive memebers of a given group."
     nameSpaces: "groups.listMembers"
     callback: stringifyFormat
@@ -56,13 +65,7 @@ module.exports =
       "<access_level>"
     ]
     desc: "Adds a user to the list of group members."
-    help: ->
-      console.log "  access_levels"
-      console.log "    GUEST:      10"
-      console.log "    REPORTER:   20"
-      console.log "    DEVELOPER:  30"
-      console.log "    MASTER:     40"
-      console.log "    OWNER:      50"
+    help: groupCustomHelp
     nameSpaces: "groups.addMember"
     callback: stringifyFormat
 
