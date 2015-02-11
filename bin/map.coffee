@@ -26,24 +26,44 @@ module.exports =
     callback: stringifyFormat
   "showGroup":
     param: [
-      "<groupId>"
+      "<group_id>"
     ]
     desc: "Get retrive group of a given group."
     nameSpaces: "groups.show"
     callback: stringifyFormat
   "showGroupProjects":
+    filter: true
+    size: true
     param: [
-      "<groupId>"
+      "<group_id>"
     ]
     desc: "Get retrive projects of a given group."
     nameSpaces: "groups.listProjects"
     callback: stringifyFormat
   "showGroupMembers":
+    filter: true
+    size: true
     param: [
-      "<groupId>"
+      "<group_id>"
     ]
     desc: "Get retrive memebers of a given group."
-    nameSpaces: "groups.listProjects"
+    nameSpaces: "groups.listMembers"
+    callback: stringifyFormat
+  "addGroupMember":
+    param: [
+      "<group_id>"
+      "<user_id>"
+      "<access_level>"
+    ]
+    desc: "Adds a user to the list of group members."
+    help: ->
+      console.log "  access_levels"
+      console.log "    GUEST:      10"
+      console.log "    REPORTER:   20"
+      console.log "    DEVELOPER:  30"
+      console.log "    MASTER:     40"
+      console.log "    OWNER:      50"
+    nameSpaces: "groups.addMember"
     callback: stringifyFormat
 
   #Issues

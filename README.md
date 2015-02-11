@@ -249,6 +249,7 @@ gitlab editIssue 12 807 -t test_it -d totest
 - showGroup
 - showGroupProjects
 - showGroupMembers
+- addGroupMember
 - issues
 - createIssue
 - editIssue

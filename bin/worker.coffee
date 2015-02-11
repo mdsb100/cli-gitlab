@@ -84,6 +84,10 @@ exports.createCommands = (map, program) ->
   _.forEach map, (cmd, key) ->
     command = program.command("#{key} #{exports.createParam(cmd.param)}")
     command.description(cmd.desc)
+    if cmd.help?
+      command.on "--help", cmd.help
+
+    cmd.options = {} unless cmd.options?
 
     if cmd.assigned_to_me?
       cmd.options.assigned_to_me =

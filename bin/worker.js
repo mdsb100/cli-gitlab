@@ -135,6 +135,12 @@ exports.createCommands = function(map, program) {
     var command;
     command = program.command("" + key + " " + (exports.createParam(cmd.param)));
     command.description(cmd.desc);
+    if (cmd.help != null) {
+      command.on("--help", cmd.help);
+    }
+    if (cmd.options == null) {
+      cmd.options = {};
+    }
     if (cmd.assigned_to_me != null) {
       cmd.options.assigned_to_me = {
         type: true,
