@@ -61,7 +61,10 @@ getObjectByNameSpaces = (currentObject, nameSpaces) ->
   object = currentObject
   nameSpaces = nameSpaces.split(".")
   for name in nameSpaces
-    object = object[name]
+    if object[name]
+      object = object[name]
+    else
+      return null
   object
 
 exports.getOption = ->

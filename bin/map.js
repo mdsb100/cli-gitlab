@@ -75,7 +75,6 @@ module.exports = {
   "issues": {
     filter: true,
     assigned_to_me: "assignee.id",
-    created_by_me: "author.id",
     size: true,
     options: {
       state: {

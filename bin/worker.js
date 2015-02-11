@@ -91,7 +91,11 @@ getObjectByNameSpaces = function(currentObject, nameSpaces) {
   nameSpaces = nameSpaces.split(".");
   for (_i = 0, _len = nameSpaces.length; _i < _len; _i++) {
     name = nameSpaces[_i];
-    object = object[name];
+    if (object[name]) {
+      object = object[name];
+    } else {
+      return null;
+    }
   }
   return object;
 };
