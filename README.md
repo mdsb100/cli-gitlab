@@ -126,7 +126,7 @@ gitlab issues --filter "item.author.id==9" -s closed
 
 Issues Usage
 =============
-## Refernce [issues](http://doc.gitlab.com/ce/api/issues.html)
+Refernce [issues](http://doc.gitlab.com/ce/api/issues.html)
 ```
 gitlab createIssue --help
 

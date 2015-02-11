@@ -42,8 +42,27 @@ exports.token = (token) ->
     nconf.set "token", token
     nconf.save()
     console.log "Save token"
+    gitlab = requireOrGetGitlab()
+    gitlab.users.current (data) ->
+      nconf.set "me", JSON.stringify(data)
+      nconf.save()
   else
     console.log nconf.get "token"
+
+getMe = ->
+  me = nconf.get("me")
+  if me?
+    JSON.parse(me)
+  else
+    console.log "Please save token again!"
+    null
+
+getObjectByNameSpaces = (currentObject, nameSpaces) ->
+  object = currentObject
+  nameSpaces = nameSpaces.split(".")
+  for name in nameSpaces
+    object = object[name]
+  object
 
 exports.getOption = ->
   opitons = nconf.get()
@@ -65,6 +84,24 @@ exports.createCommands = (map, program) ->
   _.forEach map, (cmd, key) ->
     command = program.command("#{key} #{exports.createParam(cmd.param)}")
     command.description(cmd.desc)
+
+    if cmd.assigned_to_me?
+      cmd.options.assigned_to_me =
+        param: "[assigned_to_me]"
+        type: true
+        desc: "(optional) - Filter result if assigned to me."
+
+    if cmd.created_by_me?
+      cmd.options.created_by_me =
+        param: "[created_by_me]"
+        type: true
+        desc: "(optional) - Filter result if created by me."
+
+    if cmd.size?
+      cmd.options.size =
+        param: "[size]"
+        type: true
+        desc: "(optional) - Output size of result."
 
     if cmd.filter is true
       cmd.options.filter =
@@ -101,35 +138,29 @@ exports.createCommands = (map, program) ->
       fn = nameSpaces.pop()
 
       if cmd.callback?
-        if cmd.filter is true and options? and options.filter?
-          cmd.callback = _.wrap(cmd.callback, (fn, data) ->
+        callback = cmd.callback
+
+        arg.push (data) ->
+          if cmd.filter is true and options? and options.filter?
             evalFnString = "(function(item){ return #{options.filter}; });"
             evalFn = eval(evalFnString)
             data = _.filter(data, evalFn)
-            fn(data)
-          )
-        arg.push(cmd.callback)
+          if cmd.assigned_to_me? and options.assigned_to_me?
+            data = _.filter data, (item) ->
+              return getObjectByNameSpaces(item, cmd.assigned_to_me) == getMe().id
+
+          if cmd.created_by_me? and options.created_by_me?
+            data = _.filter data, (item) ->
+              return getObjectByNameSpaces(item, cmd.created_by_me) == getMe().id
+          callback(data)
+
+          if cmd.size? and options.size?
+            console.log data.length
 
       for name in nameSpaces
         target = target[name]
       target[fn].apply(target, arg)
     )
-
-exports.url = (url) ->
-  if url?
-    nconf.set "url", url
-    nconf.save()
-    console.log "Save url"
-  else
-    console.log nconf.get "url"
-
-exports.token = (token) ->
-  if token?
-    nconf.set "token", token
-    nconf.save()
-    console.log "Save token"
-  else
-    console.log nconf.get "token"
 
 exports.getOption = ->
   opitons = nconf.get()

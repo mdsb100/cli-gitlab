@@ -49,6 +49,9 @@ module.exports =
   #Issues
   "issues":
     filter: true
+    assigned_to_me: "assignee.id"
+    created_by_me: "author.id"
+    size: true
     options:
       state:
         param: "[state]"
@@ -257,6 +260,9 @@ module.exports =
   #ProjectIssue
   "projectIssues":
     filter: true
+    size: true
+    assigned_to_me: "assignee.id"
+    created_by_me: "author.id"
     param: [
       "<projectId>"
     ]
