@@ -167,7 +167,7 @@ exports.createCommands = function(map, program) {
       cmd.options.filter = {
         param: "<filter>",
         type: true,
-        desc: "(required) - Filter result. For example: --filter 'item.assignee.id == 9' "
+        desc: "(optional) - Filter result. For example: --filter 'item.assignee.id == 9' "
       };
     }
     exports.createOptions(command, cmd.options);
