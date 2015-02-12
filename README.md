@@ -245,47 +245,61 @@ gitlab editIssue 12 807 -t test_it -d totest
 
 [List of commands](https://github.com/mdsb100/cli-gitlab/blob/master/bin/map.coffee)
 ----------------
-- groups
-- showGroup
-- showGroupProjects
-- showGroupMembers
-- addGroupMember
-- issues
-- createIssue
-- editIssue
-- showIssue
-- keys
-- getKey
-- hooks
-- showHook
-- addHook
-- updateHook
-- removeHook
-- projectIssues
-- members
-- showMember
-- addMember
-- removeMember
-- mergeRequests
-- showMergeRequest
-- addMergeRequest
-- updateMergeRequest
-- commentMergeRequest
-- milestones
-- showMilestones
-- addMilestones
-- updateMilestones
-- listBranches
-- showBranch
-- listTags
-- listCommits
-- showCommit
-- diffCommit
-- projects
+- url [url]
+- token [token]
+
 - users
 - me
-- showUser
-- session
+- showUser <user_id>
+- session <email> <password>
+
+- projects [options]
+
+- groups [options]
+- showGroup <group_id>
+- showGroupProjects [options] <group_id>
+- showGroupMembers [options] <group_id>
+- addGroupMember <group_id> <user_id> <access_level>
+
+- issues [options]
+- showIssue <project_id> <issue_id>
+- createIssue [options] <project_id>
+- editIssue [options] <project_id> <issue_id>
+- projectIssues [options] <project_id>
+
+- keys [options] <project_id>
+- getKey <project_id> <key_id>
+- addKey [options] <project_id>
+
+- hooks <project_id>
+- showHook <project_id> <hook_id>
+- addHook <project_id> <url>
+- updateHook <project_id> <hook_id> <url>
+- removeHook <project_id> <hook_id>
+
+- members <project_id>
+- showMember <project_id> <user_id>
+- addMember <project_id> <user_id> [accessLevel]
+- removeMember <project_id> <user_id>
+
+- mergeRequests [options] <project_id>
+- showMergeRequest <project_id> <merge_request_id>
+- addMergeRequest <project_id> <sourceBranch> <targetBranch> <assignee_id> <title>
+- updateMergeRequest <project_id> <merge_request_id> [accessLevel]
+- commentMergeRequest <project_id> <merge_request_id> <note>
+
+- milestones <project_id>
+- showMilestones <project_id> <milestone_id>
+- addMilestones <project_id> <title> <description> <due_date>
+- updateMilestones <project_id> <milestone_id> <title> <description> <due_date>
+
+- listBranches <project_id>
+- showBranch <project_id> <branchId>
+
+- listTags <project_id>
+- listCommits <project_id>
+- showCommit <project_id> <commit_id>
+- diffCommit <project_id> <sha>
 
 Thank
 ------------
