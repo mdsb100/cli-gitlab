@@ -279,6 +279,7 @@ gitlab editIssue 12 807 -t test_it -d totest
 - members <project_id>
 - showMember <project_id> <user_id>
 - addMember <project_id> <user_id> [accessLevel]
+- updateMember <project_id> <user_id> [accessLevel]
 - removeMember <project_id> <user_id>
 
 - mergeRequests [options] <project_id>

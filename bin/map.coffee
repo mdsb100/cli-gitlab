@@ -3,7 +3,7 @@ stringify = require("json-stable-stringify")
 stringifyFormat = (data) ->
   console.log(stringify(data, {space: 2})) if data?
 
-groupCustomHelp = ->
+accessLevelsCustomHelp = ->
   console.log "  access_levels"
   console.log "    GUEST:      10"
   console.log "    REPORTER:   20"
@@ -54,7 +54,7 @@ module.exports =
     param: [
       "<group_id>"
     ]
-    help: groupCustomHelp
+    help: accessLevelsCustomHelp
     desc: "Get retrive memebers of a given group."
     nameSpaces: "groups.listMembers"
     callback: stringifyFormat
@@ -65,7 +65,7 @@ module.exports =
       "<access_level>"
     ]
     desc: "Adds a user to the list of group members."
-    help: groupCustomHelp
+    help: accessLevelsCustomHelp
     nameSpaces: "groups.addMember"
     callback: stringifyFormat
 
@@ -364,7 +364,7 @@ module.exports =
     param: [
       "<project_id>"
     ]
-    desc: "Get retrive members of a given project."
+    desc: "Get a list of a project's team members."
     nameSpaces: "projects.members.list"
     callback: stringifyFormat
   "showMember":
@@ -372,7 +372,7 @@ module.exports =
       "<project_id>"
       "<user_id>"
     ]
-    desc: "Get retrive member of a given project and a give user."
+    desc: "Gets a project team member."
     nameSpaces: "projects.members.show"
     callback: stringifyFormat
   "addMember":
@@ -381,16 +381,26 @@ module.exports =
       "<user_id>"
       "[accessLevel]"
     ]
-    desc: "Add member by a given porject id and user id. Default of access level is 30."
+    help: accessLevelsCustomHelp
+    desc: "Adds a user to a project team. This is an idempotent method and can be called multiple times with the same parameters. Adding team membership to a user that is already a member does not affect the existing membership."
     nameSpaces: "projects.members.add"
     callback: stringifyFormat
-  #todo updatemember
+  "updateMember":
+    param: [
+      "<project_id>"
+      "<user_id>"
+      "[accessLevel]"
+    ]
+    help: accessLevelsCustomHelp
+    desc: "Updates a project team member to a specified access level."
+    nameSpaces: "projects.members.update"
+    callback: stringifyFormat
   "removeMember":
     param: [
       "<project_id>"
       "<user_id>"
     ]
-    desc: "Remove member by a given porject id and user id."
+    desc: "Removes a user from a project team."
     nameSpaces: "projects.members.remove"
     callback: stringifyFormat
 
