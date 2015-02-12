@@ -224,15 +224,39 @@ module.exports = {
     callback: stringifyFormat
   },
   "keys": {
+    filter: true,
+    size: true,
     param: ["<project_id>"],
-    desc: "Get retrive keys of a given project.",
+    desc: "Get a list of a project's deploy keys by project id.",
     nameSpaces: "projects.deploy_keys.listKeys",
     callback: stringifyFormat
   },
   "getKey": {
     param: ["<project_id>", "<key_id>"],
-    desc: "Get retrive keys of a given project and a give key.",
+    desc: "Get a single key by project id and key id.",
     nameSpaces: "projects.deploy_keys.getKey",
+    callback: stringifyFormat
+  },
+  "addKey": {
+    param: ["<project_id>"],
+    options: {
+      title: {
+        param: "<title>",
+        alias: "t",
+        type: true,
+        index: 1,
+        desc: "(required) - New deploy key's title"
+      },
+      key: {
+        param: "<key>",
+        alias: "k",
+        type: true,
+        index: 1,
+        desc: "(required) - New deploy key"
+      }
+    },
+    desc: "Creates a new deploy key for a project. If deploy key already exists in another project - it will be joined to project but only if original one was is accessible by same user.",
+    nameSpaces: "projects.deploy_keys.addKey",
     callback: stringifyFormat
   },
   "hooks": {
