@@ -118,15 +118,15 @@ module.exports =
     callback: stringifyFormat
   "showIssue":
     param: [
-      "<projectId>"
-      "<issueId>"
+      "<project_id>"
+      "<issue_id>"
     ]
     desc: "Get retrive issue of a given project and a given issue."
     nameSpaces: "issues.show"
     callback: stringifyFormat
   "createIssue":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     options:
       "title": {
@@ -169,8 +169,8 @@ module.exports =
     callback: stringifyFormat
   "editIssue":
     param: [
-      "<projectId>"
-      "<issueId>"
+      "<project_id>"
+      "<issue_id>"
     ]
     options:
       "title": {
@@ -222,15 +222,15 @@ module.exports =
   #ProjectDeployKeys
   "keys":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive keys of a given project."
     nameSpaces: "projects.deploy_keys.listKeys"
     callback: stringifyFormat
   "getKey":
     param: [
-      "<projectId>"
-      "<keyId>"
+      "<project_id>"
+      "<key_id>"
     ]
     desc: "Get retrive keys of a given project and a give key."
     nameSpaces: "projects.deploy_keys.getKey"
@@ -240,22 +240,22 @@ module.exports =
   #ProjectHooks
   "hooks":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive hooks of a given project."
     nameSpaces: "projects.hooks.list"
     callback: stringifyFormat
   "showHook":
     param: [
-      "<projectId>"
-      "<hookId>"
+      "<project_id>"
+      "<hook_id>"
     ]
     desc: "Get retrive hook of a given project and a give hook."
     nameSpaces: "projects.hooks.show"
     callback: stringifyFormat
   "addHook":
     param: [
-      "<projectId>"
+      "<project_id>"
       "<url>"
     ]
     desc: "Add hook by a given porject id and url."
@@ -263,8 +263,8 @@ module.exports =
     callback: stringifyFormat
   "updateHook":
     param: [
-      "<projectId>"
-      "<hookId>"
+      "<project_id>"
+      "<hook_id>"
       "<url>"
     ]
     desc: "Update hook by a given porject id, a given hook id and url."
@@ -272,8 +272,8 @@ module.exports =
     callback: stringifyFormat
   "removeHook":
     param: [
-      "<projectId>"
-      "<hookId>"
+      "<project_id>"
+      "<hook_id>"
     ]
     desc: "Remove hook by a given porject id abd a given hook id."
     nameSpaces: "projects.hooks.remove"
@@ -286,7 +286,7 @@ module.exports =
     assigned_to_me: "assignee.id"
     created_by_me: "author.id"
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     options:
       state:
@@ -340,23 +340,23 @@ module.exports =
   #ProjectMembers
   "members":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive members of a given project."
     nameSpaces: "projects.members.list"
     callback: stringifyFormat
   "showMember":
     param: [
-      "<projectId>"
-      "<userId>"
+      "<project_id>"
+      "<user_id>"
     ]
     desc: "Get retrive member of a given project and a give user."
     nameSpaces: "projects.members.show"
     callback: stringifyFormat
   "addMember":
     param: [
-      "<projectId>"
-      "<userId>"
+      "<project_id>"
+      "<user_id>"
       "[accessLevel]"
     ]
     desc: "Add member by a given porject id and user id. Default of access level is 30."
@@ -365,8 +365,8 @@ module.exports =
   #todo updatemember
   "removeMember":
     param: [
-      "<projectId>"
-      "<userId>"
+      "<project_id>"
+      "<user_id>"
     ]
     desc: "Remove member by a given porject id and user id."
     nameSpaces: "projects.members.remove"
@@ -375,7 +375,7 @@ module.exports =
   #ProjectMergeRequests
   "mergeRequests":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     options:
       per_page: {
@@ -397,18 +397,18 @@ module.exports =
     callback: stringifyFormat
   "showMergeRequest":
     param: [
-      "<projectId>"
-      "<mergeRequestId>"
+      "<project_id>"
+      "<merge_request_id>"
     ]
     desc: "Get retrive merge request of a given project and a merge request."
     nameSpaces: "projects.merge_requests.show"
     callback: stringifyFormat
   "addMergeRequest":
     param: [
-      "<projectId>"
+      "<project_id>"
       "<sourceBranch>"
       "<targetBranch>"
-      "<assigneeId>"
+      "<assignee_id>"
       "<title>"
     ]
     desc: "Add merge request by list of parameters."
@@ -416,8 +416,8 @@ module.exports =
     callback: stringifyFormat
   "updateMergeRequest":
     param: [
-      "<projectId>"
-      "<mergeRequestId>"
+      "<project_id>"
+      "<merge_request_id>"
       "[accessLevel]"
     ]
     desc: "Update merge request of a given project and a merge request. Default of access level is 30."
@@ -425,8 +425,8 @@ module.exports =
     callback: stringifyFormat
   "commentMergeRequest":
     param: [
-      "<projectId>"
-      "<mergeRequestId>"
+      "<project_id>"
+      "<merge_request_id>"
       "<note>"
     ]
     desc: "Comment  merge request by a given porject id, note and a merge request."
@@ -436,22 +436,22 @@ module.exports =
   #ProjectMilestones
   "milestones":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive milestones of a given project."
     nameSpaces: "projects.milestones.list"
     callback: stringifyFormat
   "showMilestones":
     param: [
-      "<projectId>"
-      "<milestoneId>"
+      "<project_id>"
+      "<milestone_id>"
     ]
     desc: "Get retrive merge request of a given project and a milestone."
     nameSpaces: "projects.milestones.show"
     callback: stringifyFormat
   "addMilestones":
     param: [
-      "<projectId>"
+      "<project_id>"
       "<title>"
       "<description>"
       "<due_date>"
@@ -461,8 +461,8 @@ module.exports =
     callback: stringifyFormat
   "updateMilestones":
     param: [
-      "<projectId>"
-      "<milestoneId>"
+      "<project_id>"
+      "<milestone_id>"
       "<title>"
       "<description>"
       "<due_date>"
@@ -475,7 +475,7 @@ module.exports =
   #ProjectRepository
   "listBranches":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive branches of a given project."
     nameSpaces: "projects.repository.listBranches"
@@ -483,7 +483,7 @@ module.exports =
 
   "showBranch":
     param: [
-      "<projectId>",
+      "<project_id>",
       "<branchId>"
     ]
     desc: "Get retrive branche of a given project and a branch id."
@@ -492,7 +492,7 @@ module.exports =
 
   "listTags":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive list tags of a given project."
     nameSpaces: "projects.repository.listTags"
@@ -500,7 +500,7 @@ module.exports =
 
   "listCommits":
     param: [
-      "<projectId>"
+      "<project_id>"
     ]
     desc: "Get retrive list commits of a given project."
     nameSpaces: "projects.repository.listCommits"
@@ -508,8 +508,8 @@ module.exports =
 
   "showCommit":
     param: [
-      "<projectId>",
-      "<commitId>"
+      "<project_id>",
+      "<commit_id>"
     ]
     desc: "Get retrive commit of a given project and a commit id."
     nameSpaces: "projects.repository.showCommit"
@@ -517,7 +517,7 @@ module.exports =
 
   "diffCommit":
     param: [
-      "<projectId>",
+      "<project_id>",
       "<sha>"
     ]
     desc: "Diff commit of a given project and sha."
@@ -568,7 +568,7 @@ module.exports =
     callback: stringifyFormat
   "showUser":
     param: [
-      "<userId>"
+      "<user_id>"
     ]
     desc: "Show users by user id."
     nameSpaces: "users.show"

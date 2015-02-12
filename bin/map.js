@@ -125,13 +125,13 @@ module.exports = {
     callback: stringifyFormat
   },
   "showIssue": {
-    param: ["<projectId>", "<issueId>"],
+    param: ["<project_id>", "<issue_id>"],
     desc: "Get retrive issue of a given project and a given issue.",
     nameSpaces: "issues.show",
     callback: stringifyFormat
   },
   "createIssue": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     options: {
       "title": {
         param: "<title>",
@@ -174,7 +174,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "editIssue": {
-    param: ["<projectId>", "<issueId>"],
+    param: ["<project_id>", "<issue_id>"],
     options: {
       "title": {
         param: "[title]",
@@ -224,43 +224,43 @@ module.exports = {
     callback: stringifyFormat
   },
   "keys": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive keys of a given project.",
     nameSpaces: "projects.deploy_keys.listKeys",
     callback: stringifyFormat
   },
   "getKey": {
-    param: ["<projectId>", "<keyId>"],
+    param: ["<project_id>", "<key_id>"],
     desc: "Get retrive keys of a given project and a give key.",
     nameSpaces: "projects.deploy_keys.getKey",
     callback: stringifyFormat
   },
   "hooks": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive hooks of a given project.",
     nameSpaces: "projects.hooks.list",
     callback: stringifyFormat
   },
   "showHook": {
-    param: ["<projectId>", "<hookId>"],
+    param: ["<project_id>", "<hook_id>"],
     desc: "Get retrive hook of a given project and a give hook.",
     nameSpaces: "projects.hooks.show",
     callback: stringifyFormat
   },
   "addHook": {
-    param: ["<projectId>", "<url>"],
+    param: ["<project_id>", "<url>"],
     desc: "Add hook by a given porject id and url.",
     nameSpaces: "projects.hooks.add",
     callback: stringifyFormat
   },
   "updateHook": {
-    param: ["<projectId>", "<hookId>", "<url>"],
+    param: ["<project_id>", "<hook_id>", "<url>"],
     desc: "Update hook by a given porject id, a given hook id and url.",
     nameSpaces: "projects.hooks.update",
     callback: stringifyFormat
   },
   "removeHook": {
-    param: ["<projectId>", "<hookId>"],
+    param: ["<project_id>", "<hook_id>"],
     desc: "Remove hook by a given porject id abd a given hook id.",
     nameSpaces: "projects.hooks.remove",
     callback: stringifyFormat
@@ -270,7 +270,7 @@ module.exports = {
     size: true,
     assigned_to_me: "assignee.id",
     created_by_me: "author.id",
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     options: {
       state: {
         param: "[state]",
@@ -327,31 +327,31 @@ module.exports = {
     callback: stringifyFormat
   },
   "members": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive members of a given project.",
     nameSpaces: "projects.members.list",
     callback: stringifyFormat
   },
   "showMember": {
-    param: ["<projectId>", "<userId>"],
+    param: ["<project_id>", "<user_id>"],
     desc: "Get retrive member of a given project and a give user.",
     nameSpaces: "projects.members.show",
     callback: stringifyFormat
   },
   "addMember": {
-    param: ["<projectId>", "<userId>", "[accessLevel]"],
+    param: ["<project_id>", "<user_id>", "[accessLevel]"],
     desc: "Add member by a given porject id and user id. Default of access level is 30.",
     nameSpaces: "projects.members.add",
     callback: stringifyFormat
   },
   "removeMember": {
-    param: ["<projectId>", "<userId>"],
+    param: ["<project_id>", "<user_id>"],
     desc: "Remove member by a given porject id and user id.",
     nameSpaces: "projects.members.remove",
     callback: stringifyFormat
   },
   "mergeRequests": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     options: {
       per_page: {
         param: "[per_page]",
@@ -373,85 +373,85 @@ module.exports = {
     callback: stringifyFormat
   },
   "showMergeRequest": {
-    param: ["<projectId>", "<mergeRequestId>"],
+    param: ["<project_id>", "<merge_request_id>"],
     desc: "Get retrive merge request of a given project and a merge request.",
     nameSpaces: "projects.merge_requests.show",
     callback: stringifyFormat
   },
   "addMergeRequest": {
-    param: ["<projectId>", "<sourceBranch>", "<targetBranch>", "<assigneeId>", "<title>"],
+    param: ["<project_id>", "<sourceBranch>", "<targetBranch>", "<assignee_id>", "<title>"],
     desc: "Add merge request by list of parameters.",
     nameSpaces: "projects.merge_requests.add",
     callback: stringifyFormat
   },
   "updateMergeRequest": {
-    param: ["<projectId>", "<mergeRequestId>", "[accessLevel]"],
+    param: ["<project_id>", "<merge_request_id>", "[accessLevel]"],
     desc: "Update merge request of a given project and a merge request. Default of access level is 30.",
     nameSpaces: "projects.merge_requests.update",
     callback: stringifyFormat
   },
   "commentMergeRequest": {
-    param: ["<projectId>", "<mergeRequestId>", "<note>"],
+    param: ["<project_id>", "<merge_request_id>", "<note>"],
     desc: "Comment  merge request by a given porject id, note and a merge request.",
     nameSpaces: "projects.merge_requests.comment",
     callback: stringifyFormat
   },
   "milestones": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive milestones of a given project.",
     nameSpaces: "projects.milestones.list",
     callback: stringifyFormat
   },
   "showMilestones": {
-    param: ["<projectId>", "<milestoneId>"],
+    param: ["<project_id>", "<milestone_id>"],
     desc: "Get retrive merge request of a given project and a milestone.",
     nameSpaces: "projects.milestones.show",
     callback: stringifyFormat
   },
   "addMilestones": {
-    param: ["<projectId>", "<title>", "<description>", "<due_date>"],
+    param: ["<project_id>", "<title>", "<description>", "<due_date>"],
     desc: "Add milestones by list of parameters.",
     nameSpaces: "projects.milestones.add",
     callback: stringifyFormat
   },
   "updateMilestones": {
-    param: ["<projectId>", "<milestoneId>", "<title>", "<description>", "<due_date>", "state_event"],
+    param: ["<project_id>", "<milestone_id>", "<title>", "<description>", "<due_date>", "state_event"],
     desc: "Update milestones by list of parameters.",
     nameSpaces: "projects.milestones.update",
     callback: stringifyFormat
   },
   "listBranches": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive branches of a given project.",
     nameSpaces: "projects.repository.listBranches",
     callback: stringifyFormat
   },
   "showBranch": {
-    param: ["<projectId>", "<branchId>"],
+    param: ["<project_id>", "<branchId>"],
     desc: "Get retrive branche of a given project and a branch id.",
     nameSpaces: "projects.repository.showBranch",
     callback: stringifyFormat
   },
   "listTags": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive list tags of a given project.",
     nameSpaces: "projects.repository.listTags",
     callback: stringifyFormat
   },
   "listCommits": {
-    param: ["<projectId>"],
+    param: ["<project_id>"],
     desc: "Get retrive list commits of a given project.",
     nameSpaces: "projects.repository.listCommits",
     callback: stringifyFormat
   },
   "showCommit": {
-    param: ["<projectId>", "<commitId>"],
+    param: ["<project_id>", "<commit_id>"],
     desc: "Get retrive commit of a given project and a commit id.",
     nameSpaces: "projects.repository.showCommit",
     callback: stringifyFormat
   },
   "diffCommit": {
-    param: ["<projectId>", "<sha>"],
+    param: ["<project_id>", "<sha>"],
     desc: "Diff commit of a given project and sha.",
     nameSpaces: "projects.repository.diffCommit",
     callback: stringifyFormat
@@ -488,7 +488,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "showUser": {
-    param: ["<userId>"],
+    param: ["<user_id>"],
     desc: "Show users by user id.",
     nameSpaces: "users.show",
     callback: stringifyFormat
