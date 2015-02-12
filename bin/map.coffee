@@ -360,6 +360,7 @@ module.exports =
 
   #ProjectMembers
   "members":
+    filter: true
     param: [
       "<project_id>"
     ]
@@ -395,6 +396,7 @@ module.exports =
 
   #ProjectMergeRequests
   "mergeRequests":
+    filter: true
     param: [
       "<project_id>"
     ]
@@ -456,6 +458,7 @@ module.exports =
 
   #ProjectMilestones
   "milestones":
+    filter: true
     param: [
       "<project_id>"
     ]
@@ -495,6 +498,7 @@ module.exports =
 
   #ProjectRepository
   "listBranches":
+    filter: true
     param: [
       "<project_id>"
     ]
@@ -512,6 +516,7 @@ module.exports =
     callback: stringifyFormat
 
   "listTags":
+    filter: true
     param: [
       "<project_id>"
     ]
@@ -520,6 +525,7 @@ module.exports =
     callback: stringifyFormat
 
   "listCommits":
+    filter: true
     param: [
       "<project_id>"
     ]
@@ -552,6 +558,7 @@ module.exports =
 
   #Project
   "projects":
+    filter: true
     options:
       per_page: {
         param: "[per_page]"
@@ -580,6 +587,7 @@ module.exports =
 
   #ProjectUsers
   "users":
+    filter: true
     desc: "Get retrive users from gitlab."
     nameSpaces: "users.all"
     callback: stringifyFormat

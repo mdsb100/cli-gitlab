@@ -351,6 +351,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "members": {
+    filter: true,
     param: ["<project_id>"],
     desc: "Get retrive members of a given project.",
     nameSpaces: "projects.members.list",
@@ -375,6 +376,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "mergeRequests": {
+    filter: true,
     param: ["<project_id>"],
     options: {
       per_page: {
@@ -421,6 +423,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "milestones": {
+    filter: true,
     param: ["<project_id>"],
     desc: "Get retrive milestones of a given project.",
     nameSpaces: "projects.milestones.list",
@@ -445,6 +448,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "listBranches": {
+    filter: true,
     param: ["<project_id>"],
     desc: "Get retrive branches of a given project.",
     nameSpaces: "projects.repository.listBranches",
@@ -457,12 +461,14 @@ module.exports = {
     callback: stringifyFormat
   },
   "listTags": {
+    filter: true,
     param: ["<project_id>"],
     desc: "Get retrive list tags of a given project.",
     nameSpaces: "projects.repository.listTags",
     callback: stringifyFormat
   },
   "listCommits": {
+    filter: true,
     param: ["<project_id>"],
     desc: "Get retrive list commits of a given project.",
     nameSpaces: "projects.repository.listCommits",
@@ -481,6 +487,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "projects": {
+    filter: true,
     options: {
       per_page: {
         param: "[per_page]",
@@ -502,6 +509,7 @@ module.exports = {
     callback: stringifyFormat
   },
   "users": {
+    filter: true,
     desc: "Get retrive users from gitlab.",
     nameSpaces: "users.all",
     callback: stringifyFormat
