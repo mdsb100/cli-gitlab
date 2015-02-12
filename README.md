@@ -56,7 +56,7 @@ gitlab issues --help
 
 ```
 # "item" means current object, so aways use "item.xx"
-gitlab issues --filter "item.author.id==9" --state closed
+gitlab issues --filter "item.assignee.id==9" --state closed
 [
 ...
 {
