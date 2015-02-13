@@ -526,7 +526,7 @@ module.exports =
     param: [
       "<project_id>"
     ]
-    desc: "Get retrive milestones of a given project."
+    desc: "Returns a list of project milestones."
     nameSpaces: "projects.milestones.list"
     callback: stringifyFormat
   "showMilestones":
@@ -534,7 +534,7 @@ module.exports =
       "<project_id>"
       "<milestone_id>"
     ]
-    desc: "Get retrive merge request of a given project and a milestone."
+    desc: "Gets a single project milestone."
     nameSpaces: "projects.milestones.show"
     callback: stringifyFormat
   "addMilestones":
@@ -544,7 +544,7 @@ module.exports =
       "<description>"
       "<due_date>"
     ]
-    desc: "Add milestones by list of parameters."
+    desc: "Creates a new project milestone."
     nameSpaces: "projects.milestones.add"
     callback: stringifyFormat
   "updateMilestones":
@@ -554,32 +554,78 @@ module.exports =
       "<title>"
       "<description>"
       "<due_date>"
-      "state_event"
+      "<state_event>"
     ]
-    desc: "Update milestones by list of parameters."
+    desc: "Updates an existing project milestone. The state event of the milestone (close|activate)."
     nameSpaces: "projects.milestones.update"
     callback: stringifyFormat
 
   #ProjectRepository
-  "listBranches":
+  "branches":
     filter: true
     param: [
       "<project_id>"
     ]
-    desc: "Get retrive branches of a given project."
+    desc: "Get a list of repository branches from a project, sorted by name alphabetically."
     nameSpaces: "projects.repository.listBranches"
     callback: stringifyFormat
-
   "showBranch":
     param: [
       "<project_id>",
-      "<branchId>"
+      "<branch_id>"
     ]
-    desc: "Get retrive branche of a given project and a branch id."
+    desc: "Get a single project repository branch."
     nameSpaces: "projects.repository.showBranch"
     callback: stringifyFormat
+  "protectBranch":
+    param: [
+      "<project_id>",
+      "<branch_id>"
+    ]
+    desc: "Protects a single project repository branch. This is an idempotent function, protecting an already protected repository branch still returns a 200 OK status code."
+    nameSpaces: "projects.repository.protectBranch"
+    callback: stringifyFormat
+  "unprotectBranch":
+    param: [
+      "<project_id>",
+      "<branch_id>"
+    ]
+    desc: "Unprotects a single project repository branch. This is an idempotent function, unprotecting an already unprotected repository branch still returns a 200 OK status code."
+    nameSpaces: "projects.repository.unprotectBranch"
+    callback: stringifyFormat
+  "createBranch":
+    options:
+      project_id:
+        param: "<project_id>"
+        alias: "i"
+        type: true
+        index: 0
+        desc: "(required) - The ID of a project."
+      branch_name:
+        param: "<branch_name>"
+        alias: "b"
+        type: true
+        index: 0
+        desc: "(required) - The name of the branch."
+      ref:
+        param: "<ref>"
+        alias: "r"
+        type: true
+        index: 0
+        desc: "(required) - Create branch from commit SHA or existing branch."
+    desc: "It return 200 if succeed or 400 if failed with error message explaining reason.."
+    nameSpaces: "projects.repository.createBranch"
+    callback: stringifyFormat
+  "deleteBranch":
+    param: [
+      "<project_id>",
+      "<branch_id>"
+    ]
+    desc: "It return 200 if succeed, 404 if the branch to be deleted does not exist or 400 for other reasons. In case of an error, an explaining message is provided."
+    nameSpaces: "projects.repository.deleteBranch"
+    callback: stringifyFormat
 
-  "listTags":
+  "tags":
     filter: true
     param: [
       "<project_id>"
@@ -588,12 +634,12 @@ module.exports =
     nameSpaces: "projects.repository.listTags"
     callback: stringifyFormat
 
-  "listCommits":
+  "commits":
     filter: true
     param: [
       "<project_id>"
     ]
-    desc: "Get retrive list commits of a given project."
+    desc: "Get a list of repository commits in a project."
     nameSpaces: "projects.repository.listCommits"
     callback: stringifyFormat
 
@@ -611,14 +657,31 @@ module.exports =
       "<project_id>",
       "<sha>"
     ]
-    desc: "Diff commit of a given project and sha."
+    desc: "Get the diff of a commit in a project."
     nameSpaces: "projects.repository.diffCommit"
     callback: stringifyFormat
 
-  #todo listTree
-  #todo showFile
-  #todo createFile
-  #todo updateFile
+  "trees":
+    filter: true
+    param: [
+      "<project_id>"
+    ]
+    options:
+      path:
+        param: "<path>"
+        alias: "p"
+        type: true
+        index: 1
+        desc: " (optional) - The path inside repository. Used to get contend of subdirectories."
+      ref_name:
+        param: "<ref_name>"
+        alias: "r"
+        type: true
+        index: 1
+        desc: "(optional) - The name of a repository branch or tag or if not given the default branch."
+    desc: "Get a list of repository files and directories in a project."
+    nameSpaces: "projects.repository.listTree"
+    callback: stringifyFormat
 
   #Project
   "projects":
@@ -638,11 +701,122 @@ module.exports =
         type: true
         index: 0
       }
-    desc: "Get retrive projects."
+      archived:
+        param: "[archived]"
+        alias: "a"
+        type: true
+        index: 0
+        desc: "(optional) - if passed, limit by archived status."
+      order_by:
+        param: "[order_by]"
+        alias: "o"
+        type: true
+        index: 0
+        desc: "(optional) - Return requests ordered by id, name, path, created_at, updated_at or last_activity_at fields. Default is created_at."
+      sort:
+        param: "[sort]"
+        alias: "s"
+        type: true
+        index: 0
+        desc: "(optional) - Return requests sorted in asc or desc order. Default is desc."
+      search:
+        param: "[search]"
+        alias: "e"
+        type: true
+        index: 0
+        desc: "(optional) - Return list of authorized projects according to a search criteria."
+    desc: "Get a list of projects accessible by the authenticated user."
     nameSpaces: "projects.all"
     callback: stringifyFormat
-  #todo show
-  #todo create
+  "showProject":
+    param: [
+      "<project_id>"
+    ]
+    desc: "Get single project."
+    nameSpaces: "projects.show"
+    callback: stringifyFormat
+  "createProject":
+    param: []
+    options:
+      name: {
+        param: "<name>"
+        desc: "(required) - new project name."
+        type: true
+        index: 0
+      }
+      path: {
+        param: "[path]"
+        alias: "p"
+        desc: "(optional) - custom repository name for new project. By default generated based on name."
+        type: true
+        index: 0
+      }
+      namespace_id: {
+        param: "[namespace_id]"
+        alias: "n"
+        desc: "(optional) - namespace for the new project (defaults to user)."
+        type: true
+        index: 0
+      }
+      description: {
+        param: "[desc]"
+        alias: "d"
+        desc: "(optional) - namespace for the new project (defaults to user)."
+        type: true
+        index: 0
+      }
+      issues_enabled: {
+        param: "[issues_enabled]"
+        alias: "i"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      merge_requests_enabled: {
+        param: "[merge_requests_enabled]"
+        alias: "m"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      wiki_enabled: {
+        param: "[wiki_enabled]"
+        alias: "w"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      snippets_enabled: {
+        param: "[snippets_enabled]"
+        alias: "s"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      public: {
+        param: "[public]"
+        alias: "p"
+        desc: "(optional) - if true same as setting visibility_level = 20."
+        type: true
+        index: 0
+      }
+      visibility_level: {
+        param: "[visibility_level]"
+        alias: "v"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      import_url: {
+        param: "[import_url]"
+        alias: "u"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+    desc: "Creates a new project owned by the authenticated user."
+    nameSpaces: "projects.create"
+    callback: stringifyFormat
 
   #ProjectUsers
   "users":
@@ -661,7 +835,110 @@ module.exports =
     desc: "Show users by user id."
     nameSpaces: "users.show"
     callback: stringifyFormat
-  #todo create
+  "createUser":
+    param: []
+    options:
+      name: {
+        param: "<name>"
+        alias: "n"
+        desc: "(required) - Name."
+        type: true
+        index: 0
+      }
+      password: {
+        param: "<password>"
+        alias: "p"
+        desc: "(required) - Password."
+        type: true
+        index: 0
+      }
+      username: {
+        param: "<username>"
+        alias: "u"
+        desc: "(required) - Username."
+        type: true
+        index: 0
+      }
+      email: {
+        param: "<email>"
+        alias: "e"
+        desc: "(required) - Email."
+        type: true
+        index: 0
+      }
+      skype: {
+        param: "[skype]"
+        alias: "s"
+        desc: "(optional) - Skype ID."
+        type: true
+        index: 0
+      }
+      linkedin: {
+        param: "[linkedin]"
+        alias: "l"
+        desc: "(optional) - LinkedIn."
+        type: true
+        index: 0
+      }
+      twitter: {
+        param: "[twitter]"
+        alias: "t"
+        desc: "(optional) - Twitter account."
+        type: true
+        index: 0
+      }
+      website_url: {
+        param: "[website_url]"
+        alias: "w"
+        desc: "(optional) - Website URL."
+        type: true
+        index: 0
+      }
+      projects_limit: {
+        param: "[projects_limit]"
+        alias: "p"
+        desc: "(optional) - Number of projects user can create."
+        type: true
+        index: 0
+      }
+      extern_uid: {
+        param: "[extern_uid]"
+        alias: "x"
+        desc: "(optional) - External UID."
+        type: true
+        index: 0
+      }
+      provider: {
+        param: "[provider]"
+        alias: "r"
+        desc: "(optional) - External provider name."
+        type: true
+        index: 0
+      }
+      bio: {
+        param: "[bio]"
+        alias: "b"
+        desc: "(optional) - User's biography."
+        type: true
+        index: 0
+      }
+      admin: {
+        param: "[admin]"
+        alias: "a"
+        desc: "(optional) - User is admin - true or false (default)."
+        type: true
+        index: 0
+      }
+      can_create_group: {
+        param: "[can_create_group]"
+        alias: "c"
+        desc: "(optional) - User can create groups - true or false."
+        type: true
+        index: 0
+      }
+    desc: "Creates a new project owned by the authenticated user."
+    nameSpaces: "projects.create"
+    callback: stringifyFormat
   "session":
     param: [
       "<email>"

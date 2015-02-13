@@ -250,9 +250,12 @@ gitlab editIssue 12 807 -t test_it -d totest
 - users
 - me
 - showUser <user_id>
+- createUser [options]
 - session <email> <password>
 
 - projects [options]
+- showProject <project_id>
+- createProject [options]
 
 - groups [options]
 - showGroup <group_id>
@@ -293,13 +296,18 @@ gitlab editIssue 12 807 -t test_it -d totest
 - addMilestones <project_id> <title> <description> <due_date>
 - updateMilestones <project_id> <milestone_id> <title> <description> <due_date>
 
-- listBranches <project_id>
+- branches <project_id>
 - showBranch <project_id> <branchId>
+- protectBranch <project_id> <branchId>
+- unprotectBranch <project_id> <branchId>
+- createBranch [options]
+- deleteBranch <project_id> <branchId>
 
-- listTags <project_id>
-- listCommits <project_id>
+- tags <project_id>
+- commits <project_id>
 - showCommit <project_id> <commit_id>
 - diffCommit <project_id> <sha>
+- trees [options] <project_id>
 
 Thank
 ------------
