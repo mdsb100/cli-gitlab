@@ -400,33 +400,98 @@ module.exports = {
         desc: "(optional) - The offset of list.",
         type: true,
         index: 1
+      },
+      state: {
+        param: "[state]",
+        alias: "s",
+        type: true,
+        index: 1,
+        desc: "(optional) - Return all requests or just those that are merged, opened or closed"
+      },
+      order_by: {
+        param: "[order_by]",
+        alias: "o",
+        type: true,
+        index: 1,
+        desc: "(optional) - Return requests ordered by created_at or updated_at fields. Default is created_at"
+      },
+      sort: {
+        param: "[sort]",
+        alias: "d",
+        type: true,
+        index: 1,
+        desc: "(optional) - Return requests sorted in asc or desc order. Default is desc"
       }
     },
-    desc: "Get retrive merge requests of a given project.",
+    desc: "Get all merge requests for this project.",
     nameSpaces: "projects.merge_requests.list",
     callback: stringifyFormat
   },
   "showMergeRequest": {
     param: ["<project_id>", "<merge_request_id>"],
-    desc: "Get retrive merge request of a given project and a merge request.",
+    desc: "Shows information about a single merge request.",
     nameSpaces: "projects.merge_requests.show",
     callback: stringifyFormat
   },
   "addMergeRequest": {
     param: ["<project_id>", "<sourceBranch>", "<targetBranch>", "<assignee_id>", "<title>"],
-    desc: "Add merge request by list of parameters.",
+    desc: "Creates a new merge request.",
     nameSpaces: "projects.merge_requests.add",
     callback: stringifyFormat
   },
   "updateMergeRequest": {
-    param: ["<project_id>", "<merge_request_id>", "[accessLevel]"],
-    desc: "Update merge request of a given project and a merge request. Default of access level is 30.",
+    param: ["<project_id>", "<merge_request_id>"],
+    options: {
+      source_branch: {
+        param: "[source_branch]",
+        alias: "s",
+        type: true,
+        index: 2,
+        desc: "(optional) - The source branch."
+      },
+      target_branch: {
+        param: "[target_branch]",
+        alias: "b",
+        type: true,
+        index: 2,
+        desc: "(optional) - The target branch."
+      },
+      assignee_id: {
+        param: "[assignee_id]",
+        alias: "a",
+        type: true,
+        index: 2,
+        desc: "(optional) - Assignee user ID."
+      },
+      title: {
+        param: "[title]",
+        alias: "t",
+        type: true,
+        index: 2,
+        desc: "(optional) - Title of MR."
+      },
+      description: {
+        param: "[desc]",
+        alias: "d",
+        type: true,
+        index: 2,
+        desc: "(optional) - Description of MR."
+      },
+      state_event: {
+        param: "[state_event]",
+        alias: "e",
+        type: true,
+        index: 2,
+        desc: "(optional) - New state (close|reopen|merge)."
+      }
+    },
+    desc: "Updates an existing merge request. You can change branches, title, or even close the MR.",
     nameSpaces: "projects.merge_requests.update",
     callback: stringifyFormat
   },
   "commentMergeRequest": {
     param: ["<project_id>", "<merge_request_id>", "<note>"],
-    desc: "Comment  merge request by a given porject id, note and a merge request.",
+    desc: "Adds a comment to a merge request.",
     nameSpaces: "projects.merge_requests.comment",
     callback: stringifyFormat
   },
