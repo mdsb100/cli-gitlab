@@ -244,70 +244,70 @@ gitlab editIssue 12 807 -t test_it -d totest
 
 [List of commands](https://github.com/mdsb100/cli-gitlab/blob/master/bin/map.coffee)
 ----------------
-- url [url]
-- token [token]
+- url
+- token
 
 - users
 - me
-- showUser <user_id>
-- createUser [options]
-- session <email> <password>
+- showUser
+- createUser
+- session
 
-- projects [options]
-- showProject <project_id>
-- createProject [options]
+- projects
+- showProject
+- createProject
 
-- groups [options]
-- showGroup <group_id>
-- showGroupProjects [options] <group_id>
-- showGroupMembers [options] <group_id>
-- addGroupMember <group_id> <user_id> <access_level>
+- groups
+- showGroup
+- showGroupProjects
+- showGroupMembers
+- addGroupMember
 
-- issues [options]
-- showIssue <project_id> <issue_id>
-- createIssue [options] <project_id>
-- editIssue [options] <project_id> <issue_id>
-- projectIssues [options] <project_id>
+- issues
+- showIssue
+- createIssue
+- editIssue
+- projectIssues
 
-- keys [options] <project_id>
-- getKey <project_id> <key_id>
-- addKey [options] <project_id>
+- keys
+- getKey
+- addKey
 
-- hooks <project_id>
-- showHook <project_id> <hook_id>
-- addHook <project_id> <url>
-- updateHook <project_id> <hook_id> <url>
-- removeHook <project_id> <hook_id>
+- hooks
+- showHook
+- addHook
+- updateHook
+- removeHook
 
-- members <project_id>
-- showMember <project_id> <user_id>
-- addMember <project_id> <user_id> [accessLevel]
-- updateMember <project_id> <user_id> [accessLevel]
-- removeMember <project_id> <user_id>
+- members
+- showMember
+- addMember
+- updateMember
+- removeMember
 
-- mergeRequests [options] <project_id>
-- showMergeRequest <project_id> <merge_request_id>
-- addMergeRequest <project_id> <sourceBranch> <targetBranch> <assignee_id> <project_title>
-- updateMergeRequest <project_id> <merge_request_id> [accessLevel]
-- commentMergeRequest <project_id> <merge_request_id> <note>
+- mergeRequests
+- showMergeRequest
+- addMergeRequest
+- updateMergeRequest
+- commentMergeRequest
 
-- milestones <project_id>
-- showMilestones <project_id> <milestone_id>
-- addMilestones <project_id> <project_title> <description> <due_date>
-- updateMilestones <project_id> <milestone_id> <project_title> <description> <due_date>
+- milestones
+- showMilestones
+- addMilestones
+- updateMilestones
 
-- branches <project_id>
-- showBranch <project_id> <branchId>
-- protectBranch <project_id> <branchId>
-- unprotectBranch <project_id> <branchId>
-- createBranch [options]
-- deleteBranch <project_id> <branchId>
+- branches
+- showBranch
+- protectBranch
+- unprotectBranch
+- createBranch
+- deleteBranch
 
-- tags <project_id>
-- commits <project_id>
-- showCommit <project_id> <commit_id>
-- diffCommit <project_id> <sha>
-- trees [options] <project_id>
+- tags
+- commits
+- showCommit
+- diffCommit
+- trees
 
 Thank
 ------------
