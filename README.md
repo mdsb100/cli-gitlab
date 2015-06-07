@@ -50,7 +50,7 @@ gitlab issues --help
     -p, --page [page]          (optional) - The offset of list.
      --assigned_to_me          (optional) - Filter result if assigned to me.
      --size [size]             (optional) - Output size of result.
-     --filter &ltfilter&gt         (optional) - Filter result. For example: --filter 'item.assignee.id == 9'
+     --filter <filter>         (optional) - Filter result. For example: --filter 'item.assignee.id == 9'
 ```
 
 ```
@@ -145,14 +145,14 @@ Refernce [issues](http://doc.gitlab.com/ce/api/issues.html)
 ```
 gitlab createIssue --help
 
-  Usage: createIssue [options] &ltprojectId&gt
+  Usage: createIssue [options] <projectId>
 
   Creates a new project issue.If the operation is successful, 200 and the newly created issue is returned. If an error occurs, an error number and a message explaining the reason is returned.
 
   Options:
 
     -h, --help                         output usage information
-    -t, --title &lttitle&gt                (required) - The title of an issue.
+    -t, --title <title>                (required) - The title of an issue.
     -d, --description [desc]           (optional) - The description of an issue.
     -a, --assignee_id [assignee_id]    (optional) - The ID of a user to assign issue.
     -m, --milestone_id [milestone_id]  (optional) - The ID of a milestone to assign issue.
@@ -194,7 +194,7 @@ gitlab createIssue 12 -t test -a 9
 ```
 gitlab editIssue --help
 
-  Usage: editIssue [options] &ltprojectId&gt &ltissueId&gt
+  Usage: editIssue [options] <projectId> <issueId>
 
   Updates an existing project issue. This function is also used to mark an issue as closed.If the operation is successful, 200 and the updated issue is returned. If an error occurs, an error number and a message explaining the reason is returned.
 
@@ -249,65 +249,65 @@ gitlab editIssue 12 807 -t test_it -d totest
 
 - users
 - me
-- showUser &ltuser_id&gt
+- showUser <user_id>
 - createUser [options]
-- session &ltemail&gt &ltpassword&gt
+- session <email> <password>
 
 - projects [options]
-- showProject &ltproject_id&gt
+- showProject <project_id>
 - createProject [options]
 
 - groups [options]
-- showGroup &ltgroup_id&gt
-- showGroupProjects [options] &ltgroup_id&gt
-- showGroupMembers [options] &ltgroup_id&gt
-- addGroupMember &ltgroup_id&gt &ltuser_id&gt &ltaccess_level&gt
+- showGroup <group_id>
+- showGroupProjects [options] <group_id>
+- showGroupMembers [options] <group_id>
+- addGroupMember <group_id> <user_id> <access_level>
 
 - issues [options]
-- showIssue &ltproject_id&gt &ltissue_id&gt
-- createIssue [options] &ltproject_id&gt
-- editIssue [options] &ltproject_id&gt &ltissue_id&gt
-- projectIssues [options] &ltproject_id&gt
+- showIssue <project_id> <issue_id>
+- createIssue [options] <project_id>
+- editIssue [options] <project_id> <issue_id>
+- projectIssues [options] <project_id>
 
-- keys [options] &ltproject_id&gt
-- getKey &ltproject_id&gt &ltkey_id&gt
-- addKey [options] &ltproject_id&gt
+- keys [options] <project_id>
+- getKey <project_id> <key_id>
+- addKey [options] <project_id>
 
-- hooks &ltproject_id&gt
-- showHook &ltproject_id&gt &lthook_id&gt
-- addHook &ltproject_id&gt &lturl&gt
-- updateHook &ltproject_id&gt &lthook_id&gt &lturl&gt
-- removeHook &ltproject_id&gt &lthook_id&gt
+- hooks <project_id>
+- showHook <project_id> <hook_id>
+- addHook <project_id> <url>
+- updateHook <project_id> <hook_id> <url>
+- removeHook <project_id> <hook_id>
 
-- members &ltproject_id&gt
-- showMember &ltproject_id&gt &ltuser_id&gt
-- addMember &ltproject_id&gt &ltuser_id&gt [accessLevel]
-- updateMember &ltproject_id&gt &ltuser_id&gt [accessLevel]
-- removeMember &ltproject_id&gt &ltuser_id&gt
+- members <project_id>
+- showMember <project_id> <user_id>
+- addMember <project_id> <user_id> [accessLevel]
+- updateMember <project_id> <user_id> [accessLevel]
+- removeMember <project_id> <user_id>
 
-- mergeRequests [options] &ltproject_id&gt
-- showMergeRequest &ltproject_id&gt &ltmerge_request_id&gt
-- addMergeRequest &ltproject_id&gt &ltsourceBranch&gt &lttargetBranch&gt &ltassignee_id&gt &lttitle&gt
-- updateMergeRequest &ltproject_id&gt &ltmerge_request_id&gt [accessLevel]
-- commentMergeRequest &ltproject_id&gt &ltmerge_request_id&gt &ltnote&gt
+- mergeRequests [options] <project_id>
+- showMergeRequest <project_id> <merge_request_id>
+- addMergeRequest <project_id> <sourceBranch> <targetBranch> <assignee_id> <project_title>
+- updateMergeRequest <project_id> <merge_request_id> [accessLevel]
+- commentMergeRequest <project_id> <merge_request_id> <note>
 
-- milestones &ltproject_id&gt
-- showMilestones &ltproject_id&gt &ltmilestone_id&gt
-- addMilestones &ltproject_id&gt &lttitle&gt &ltdescription&gt &ltdue_date&gt
-- updateMilestones &ltproject_id&gt &ltmilestone_id&gt &lttitle&gt &ltdescription&gt &ltdue_date&gt
+- milestones <project_id>
+- showMilestones <project_id> <milestone_id>
+- addMilestones <project_id> <project_title> <description> <due_date>
+- updateMilestones <project_id> <milestone_id> <project_title> <description> <due_date>
 
-- branches &ltproject_id&gt
-- showBranch &ltproject_id&gt &ltbranchId&gt
-- protectBranch &ltproject_id&gt &ltbranchId&gt
-- unprotectBranch &ltproject_id&gt &ltbranchId&gt
+- branches <project_id>
+- showBranch <project_id> <branchId>
+- protectBranch <project_id> <branchId>
+- unprotectBranch <project_id> <branchId>
 - createBranch [options]
-- deleteBranch &ltproject_id&gt &ltbranchId&gt
+- deleteBranch <project_id> <branchId>
 
-- tags &ltproject_id&gt
-- commits &ltproject_id&gt
-- showCommit &ltproject_id&gt &ltcommit_id&gt
-- diffCommit &ltproject_id&gt &ltsha&gt
-- trees [options] &ltproject_id&gt
+- tags <project_id>
+- commits <project_id>
+- showCommit <project_id> <commit_id>
+- diffCommit <project_id> <sha>
+- trees [options] <project_id>
 
 Thank
 ------------
