@@ -1,7 +1,7 @@
 cli-gitlab
 ===========
 Check [node-gitlab](https://github.com/moul/node-gitlab)
-
+Dependencie on node-gitlab 1.3.0
 Quick Start
 =====
 ```bash

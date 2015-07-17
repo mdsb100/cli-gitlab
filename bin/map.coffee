@@ -936,8 +936,8 @@ module.exports =
         type: true
         index: 0
       }
-    desc: "Creates a new project owned by the authenticated user."
-    nameSpaces: "projects.create"
+    desc: "Creates a new user. Note only administrators can create new users."
+    nameSpaces: "users.create"
     callback: stringifyFormat
   "session":
     param: [
