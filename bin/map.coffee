@@ -68,6 +68,69 @@ module.exports =
     help: accessLevelsCustomHelp
     nameSpaces: "groups.addMember"
     callback: stringifyFormat
+  "createGroup":
+    options:
+      "name": {
+        param: "<name>"
+        alias: "n"
+        desc: "name (required) - The name of the group"
+        type: true
+        index: 0
+      }
+      "path": {
+        param: "<path>"
+        alias: "p"
+        desc: "path (required) - The path of the group."
+        type: true
+        index: 0
+      }
+      "description": {
+        param: "[desc]"
+        alias: "d"
+        desc: "(optional) - The description of an issue."
+        type: true
+        index: 0
+      }
+      "visibility_level": {
+        param: "[visibility_level]"
+        alias: "v"
+        desc: "(optional) - The group's visibility. 0 for private, 10 for internal, 20 for public."
+        type: true
+        index: 0
+      }
+    desc: "Creates a new project group. Available only for users who can create groups."
+    help: accessLevelsCustomHelp
+    nameSpaces: "groups.create"
+    callback: stringifyFormat
+  "transferProjectToGroup":
+    param: [
+      "<id>"
+      "<project_id>"
+    ]
+    desc: "Transfer a project to the Group namespace. Available only for admin."
+    # help: accessLevelsCustomHelp
+    nameSpaces: "groups.addProject"
+    callback: stringifyFormat
+  "searchGroup":
+    param: [
+      "<nameOrPath>"
+    ]
+    desc: "Get all groups that match your string in their name or path."
+    # help: accessLevelsCustomHelp
+    nameSpaces: "groups.search"
+    callback: stringifyFormat
+
+  #IssuesNote
+  "issueNotes":
+    filter: true
+    size: true
+    param: [
+      "<projectId>"
+      "<issueId>"
+    ]
+    desc: "List project issue notes."
+    nameSpaces: "issues.notes.all"
+    callback: stringifyFormat
 
   #Issues
   "issues":
@@ -219,6 +282,57 @@ module.exports =
     nameSpaces: "issues.edit"
     callback: stringifyFormat
 
+  #Labels
+  "createLabel":
+    param: [
+      "<project_id>"
+    ]
+    options:
+      title:
+        param: "<name>"
+        alias: "n"
+        type: true
+        index: 1
+        desc: "(required) - The name of the label."
+      key:
+        param: "<color>"
+        alias: "c"
+        type: true
+        index: 1
+        desc: "(required) - The color of the label in 6-digit hex notation with leading # sign."
+      description:
+        param: "[description]"
+        alias: "d"
+        type: true
+        index: 1
+        desc: "(optional) - The description of the label."
+    desc: "Creates a new label for the given repository with the given name and color."
+    nameSpaces: "labels.create"
+    callback: stringifyFormat
+
+  #Notes
+  "createNote":
+    param: [
+      "<project_id>"
+      "<issue_id>"
+    ]
+    options:
+      body:
+        param: "<body>"
+        alias: "b"
+        type: true
+        index: 1
+        desc: "(required) - The content of a note."
+      created_at:
+        param: "[created_at]"
+        alias: "c"
+        type: true
+        index: 1
+        desc: " (optional) - Date time string, ISO 8601 formatted, e.g. 2016-03-11T03:45:40Z."
+    desc: "Creates a new note to a single project issue."
+    nameSpaces: "notes.create"
+    callback: stringifyFormat
+
   #ProjectDeployKeys
   "keys":
     filter: true
@@ -357,6 +471,17 @@ module.exports =
     desc: "Get a list of project issues. This function accepts pagination parameters page and per_page to return the list of project issues."
     nameSpaces: "projects.issues.list"
     callback: stringifyFormat
+  
+  #ProjectLabels
+  "projectLabels":
+    filter: true
+    size: true
+    param: [
+      "<project_id>"
+    ]
+    desc: "Get all labels for a given project."
+    nameSpaces: "projects.lables.all"
+    callback: stringifyFormat
 
   #ProjectMembers
   "members":
@@ -462,6 +587,31 @@ module.exports =
       "<assignee_id>"
       "<title>"
     ]
+    # options:
+    #   description:
+    #     param: "[desc]"
+    #     alias: "d"
+    #     type: true
+    #     index: 6
+    #     desc: "(optional) - Description of MR."
+    #   target_project_id:
+    #     param: "[target_project_id]"
+    #     alias: "p"
+    #     type: true
+    #     index: 6
+    #     desc: "(optional) - The target project (numeric id)."
+    #   labels:
+    #     param: "[lables]"
+    #     alias: "l"
+    #     type: true
+    #     index: 6
+    #     desc: "(optional) - Labels for MR as a comma-separated list."
+    #   milestone_id:
+    #     param: "[milestone_id]"
+    #     alias: "m"
+    #     type: true
+    #     index: 6
+    #     desc: "(optional) - Milestone ID."
     desc: "Creates a new merge request."
     nameSpaces: "projects.merge_requests.add"
     callback: stringifyFormat
@@ -507,6 +657,18 @@ module.exports =
         type: true
         index: 2
         desc: "(optional) - New state (close|reopen|merge)."
+      labels:
+        param: "[lables]"
+        alias: "l"
+        type: true
+        index: 2
+        desc: "(optional) - Labels for MR as a comma-separated list."
+      milestone_id:
+        param: "[milestone_id]"
+        alias: "m"
+        type: true
+        index: 2
+        desc: "(optional) - Milestone ID."
     desc: "Updates an existing merge request. You can change branches, title, or even close the MR."
     nameSpaces: "projects.merge_requests.update"
     callback: stringifyFormat
@@ -793,8 +955,8 @@ module.exports =
         type: true
         index: 0
       }
-      public: {
-        param: "[public]"
+      public_builds: {
+        param: "[public_builds]"
         alias: "p"
         desc: "(optional) - if true same as setting visibility_level = 20."
         type: true
@@ -816,6 +978,360 @@ module.exports =
       }
     desc: "Creates a new project owned by the authenticated user."
     nameSpaces: "projects.create"
+    callback: stringifyFormat
+  "createProjectForUser":
+    param: []
+    options:
+      user_id: {
+        param: "<user_id>"
+        alias: "u"
+        desc: "(required) - user_id of owner."
+        type: true
+        index: 0
+      }
+      name: {
+        param: "<name>"
+        alias: "n"
+        desc: " (required) - new project name."
+        type: true
+        index: 0
+      }
+      description: {
+        param: "[desc]"
+        alias: "d"
+        desc: "(optional) - namespace for the new project (defaults to user)."
+        type: true
+        index: 0
+      }
+      issues_enabled: {
+        param: "[issues_enabled]"
+        alias: "i"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      merge_requests_enabled: {
+        param: "[merge_requests_enabled]"
+        alias: "m"
+        desc: "(optional)"
+        type: true
+        index: 0
+      }
+      builds_enabled: {
+        param: "[builds_enabled]"
+        alias: "b"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      wiki_enabled: {
+        param: "[wiki_enabled]"
+        alias: "w"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      snippets_enabled: {
+        param: "[snippets_enabled]"
+        alias: "s"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      container_registry_enabled: {
+        param: "[container_registry_enabled]"
+        alias: "c"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      shared_runners_enabled: {
+        param: "[shared_runners_enabled]"
+        alias: "r"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      public: {
+        param: "[public]"
+        alias: "p"
+        desc: "(optional) - if true same as setting visibility_level = 20."
+        type: true
+        index: 1
+      }
+      visibility_level: {
+        param: "[visibility_level]"
+        alias: "v"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      public_builds: {
+        param: "[public_builds]"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+    desc: "Creates a new project owned by the specified user. Available only for admins."
+    nameSpaces: "projects.create_for_user"
+    callback: stringifyFormat
+  "updateProject":
+    param: [
+      "projectId"
+    ]
+    options:
+      name: {
+        param: "<name>"
+        desc: "(required) - new project name."
+        type: true
+        index: 1
+      }
+      path: {
+        param: "[path]"
+        alias: "p"
+        desc: "(optional) - custom repository name for new project. By default generated based on name."
+        type: true
+        index: 1
+      }
+      description: {
+        param: "[desc]"
+        alias: "d"
+        desc: "(optional) - namespace for the new project (defaults to user)."
+        type: true
+        index: 1
+      }
+      default_branch: {
+        param: "[default_branch]"
+        alias: "b"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      issues_enabled: {
+        param: "[issues_enabled]"
+        alias: "i"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      merge_requests_enabled: {
+        param: "[merge_requests_enabled]"
+        alias: "m"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      builds_enabled: {
+        param: "[builds_enabled]"
+        alias: "b"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      wiki_enabled: {
+        param: "[wiki_enabled]"
+        alias: "w"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      snippets_enabled: {
+        param: "[snippets_enabled]"
+        alias: "s"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      container_registry_enabled: {
+        param: "[container_registry_enabled]"
+        alias: "c"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      shared_runners_enabled: {
+        param: "[shared_runners_enabled]"
+        alias: "r"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      public: {
+        param: "[public]"
+        alias: "p"
+        desc: "(optional) - if true same as setting visibility_level = 20."
+        type: true
+        index: 1
+      }
+      visibility_level: {
+        param: "[visibility_level]"
+        alias: "v"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+      public_builds: {
+        param: "[public_builds]"
+        desc: "(optional)"
+        type: true
+        index: 1
+      }
+    desc: "Update project."
+    nameSpaces: "projects.edit"
+    callback: stringifyFormat
+  "projectsAdminOnly":
+    options:
+      per_page: {
+        param: "[per_page]"
+        alias: "e"
+        desc: "(optional) - The limit of list."
+        type: true
+        index: 0
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "(optional) - The offset of list."
+        type: true
+        index: 0
+      }
+      archived:
+        param: "[archived]"
+        alias: "a"
+        type: true
+        index: 0
+        desc: "(optional) - if passed, limit by archived status."
+      order_by:
+        param: "[order_by]"
+        alias: "o"
+        type: true
+        index: 0
+        desc: "(optional) - Return requests ordered by id, name, path, created_at, updated_at or last_activity_at fields. Default is created_at."
+      sort:
+        param: "[sort]"
+        alias: "s"
+        type: true
+        index: 0
+        desc: "(optional) - Return requests sorted in asc or desc order. Default is desc."
+      search:
+        param: "[search]"
+        alias: "e"
+        type: true
+        index: 0
+        desc: "(optional) - Return list of authorized projects according to a search criteria."
+    desc: "Get a list of all GitLab projects (admin only)."
+    nameSpaces: "projects.allAdmin"
+    callback: stringifyFormat
+  "removeProject":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Remove project by project id."
+    nameSpaces: "projects.remove"
+    callback: stringifyFormat
+  "forkProject":
+    param: [
+      "<projectId>"
+    ]
+    desc: "Forks a project into the user namespace of the authenticated user."
+    nameSpaces: "projects.fork"
+    callback: stringifyFormat
+  "searchProject":
+    size: true
+    filter: true
+    param: [
+      "<projectName>"
+    ]
+    options:
+      per_page: {
+        param: "[per_page]"
+        alias: "e"
+        desc: "(optional) - The limit of list."
+        type: true
+        index: 1
+      }
+      page: {
+        param: "[page]"
+        alias: "p"
+        desc: "(optional) - The offset of list."
+        type: true
+        index: 1
+      }
+      archived:
+        param: "[archived]"
+        alias: "a"
+        type: true
+        index: 1
+        desc: "(optional) - if passed, limit by archived status."
+      order_by:
+        param: "[order_by]"
+        alias: "o"
+        type: true
+        index: 1
+        desc: "(optional) - Return requests ordered by id, name, path, created_at, updated_at or last_activity_at fields. Default is created_at."
+      sort:
+        param: "[sort]"
+        alias: "s"
+        type: true
+        index: 1
+        desc: "(optional) - Return requests sorted in asc or desc order. Default is desc."
+    desc: "Search for projects by name which are accessible to the authenticated user."
+    nameSpaces: "projects.search"
+    callback: stringifyFormat
+  "triggersOfProject":
+    size: true
+    filter: true
+    param: [
+      "<projectId>"
+    ]
+    desc: "Get triggers from project"
+    nameSpaces: "projects.listTriggers"
+    callback: stringifyFormat
+
+  #ProjectServices
+  "showProjectService":
+    param: [
+      "<projectId>"
+      "<serviceName>"
+    ]
+    desc: "Show project Service by project id and service name."
+    nameSpaces: "projects.services.show"
+    callback: stringifyFormat
+  # "updateProjectService":
+  #   param: [
+  #     "<projectId>"
+  #     "<serviceName>"
+  #   ]
+  #   desc: "Update project Service by project id and service name."
+  #   nameSpaces: "projects.services.update"
+  #   callback: stringifyFormat
+  "removeProjectService":
+    param: [
+      "<projectId>"
+      "<serviceName>"
+    ]
+    desc: "Remove project Service by project id and service name."
+    nameSpaces: "projects.services.remove"
+    callback: stringifyFormat
+
+
+  #UserKeys
+  "userKeys":
+    filter: true
+    param: [
+      "<userId>"
+    ]
+    desc: "Get user keys by user id."
+    nameSpaces: "users.keys.all"
+    callback: stringifyFormat
+  "addUserKey":
+    param: [
+      "<userId>"
+      "<title>"
+      "<key>"
+    ]
+    desc: "Add user keys by user id and title and key."
+    nameSpaces: "users.keys.addKey"
     callback: stringifyFormat
 
   #ProjectUsers
@@ -946,4 +1462,13 @@ module.exports =
     ]
     desc: "Get session by email and password."
     nameSpaces: "users.session"
+    callback: stringifyFormat
+  "searchUsers":
+    filter: true
+    size: true
+    param: [
+      "<emailOrUsername>"
+    ]
+    desc: "Search user by email or username."
+    nameSpaces: "users.search"
     callback: stringifyFormat

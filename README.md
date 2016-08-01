@@ -1,7 +1,7 @@
 cli-gitlab
 ===========
 Check [node-gitlab](https://github.com/moul/node-gitlab)
-Dependencie on node-gitlab 1.3.0
+Dependencie on node-gitlab 1.7.0 or late
 Quick Start
 =====
 ```bash
@@ -244,70 +244,77 @@ gitlab editIssue 12 807 -t test_it -d totest
 
 [List of commands](https://github.com/mdsb100/cli-gitlab/blob/master/bin/map.coffee)
 ----------------
-- url
-- token
-
-- users
-- me
-- showUser
-- createUser
-- session
-
-- projects
-- showProject
-- createProject
-
 - groups
 - showGroup
 - showGroupProjects
 - showGroupMembers
 - addGroupMember
-
+- createGroup
+- transferProjectToGroup
+- searchGroup
+- issueNotes
 - issues
 - showIssue
 - createIssue
 - editIssue
-- projectIssues
-
+- createLabel
+- createNote
 - keys
 - getKey
 - addKey
-
 - hooks
 - showHook
 - addHook
 - updateHook
 - removeHook
-
+- projectIssues
+- projectLabels
 - members
 - showMember
 - addMember
 - updateMember
 - removeMember
-
 - mergeRequests
 - showMergeRequest
 - addMergeRequest
 - updateMergeRequest
 - commentMergeRequest
-
 - milestones
 - showMilestones
 - addMilestones
 - updateMilestones
-
 - branches
 - showBranch
 - protectBranch
 - unprotectBranch
 - createBranch
 - deleteBranch
-
 - tags
 - commits
 - showCommit
 - diffCommit
 - trees
+- projects
+- showProject
+- createProject
+- createProjectForUser
+- updateProject
+- projectsAdminOnly
+- removeProject
+- forkProject
+- searchProject
+- triggersOfProject
+- showProjectService
+- removeProjectService
+- addUserKey
+- userKeys
+- addUserKey
+- users
+- me
+- showUser
+- createUser
+- session
+- searchUsers
 
 Thank
 ------------
