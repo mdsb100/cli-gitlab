@@ -49,13 +49,16 @@ exports.token = (token) ->
   else
     console.log nconf.get "token"
 
-getMe = ->
+getMe = (key) ->
+  result = null
   me = nconf.get("me")
   if me?
-    JSON.parse(me)
-  else
+    result = JSON.parse(me)[key]
+      
+  unless result?
     console.log "Please save token again!"
-    null
+  
+  result
 
 getObjectByNameSpaces = (currentObject, nameSpaces) ->
   object = currentObject
@@ -151,11 +154,11 @@ exports.createCommands = (map, program) ->
             data = _.filter(data, evalFn)
           if cmd.assigned_to_me? and options.assigned_to_me?
             data = _.filter data, (item) ->
-              return getObjectByNameSpaces(item, cmd.assigned_to_me) == getMe().id
+              return getObjectByNameSpaces(item, cmd.assigned_to_me) == getMe("id")
 
           if cmd.created_by_me? and options.created_by_me?
             data = _.filter data, (item) ->
-              return getObjectByNameSpaces(item, cmd.created_by_me) == getMe().id
+              return getObjectByNameSpaces(item, cmd.created_by_me) == getMe("id")
           callback(data)
 
           if cmd.size? and options.size?

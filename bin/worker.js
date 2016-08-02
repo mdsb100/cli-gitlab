@@ -74,15 +74,17 @@ exports.token = function(token) {
   }
 };
 
-getMe = function() {
-  var me;
+getMe = function(key) {
+  var me, result;
+  result = null;
   me = nconf.get("me");
   if (me != null) {
-    return JSON.parse(me);
-  } else {
-    console.log("Please save token again!");
-    return null;
+    result = JSON.parse(me)[key];
   }
+  if (result == null) {
+    console.log("Please save token again!");
+  }
+  return result;
 };
 
 getObjectByNameSpaces = function(currentObject, nameSpaces) {
@@ -215,12 +217,12 @@ exports.createCommands = function(map, program) {
           }
           if ((cmd.assigned_to_me != null) && (options.assigned_to_me != null)) {
             data = _.filter(data, function(item) {
-              return getObjectByNameSpaces(item, cmd.assigned_to_me) === getMe().id;
+              return getObjectByNameSpaces(item, cmd.assigned_to_me) === getMe("id");
             });
           }
           if ((cmd.created_by_me != null) && (options.created_by_me != null)) {
             data = _.filter(data, function(item) {
-              return getObjectByNameSpaces(item, cmd.created_by_me) === getMe().id;
+              return getObjectByNameSpaces(item, cmd.created_by_me) === getMe("id");
             });
           }
           callback(data);
