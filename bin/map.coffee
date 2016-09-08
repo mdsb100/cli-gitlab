@@ -1438,6 +1438,13 @@ module.exports =
         type: true
         index: 0
       }
+      location: {
+        param: "[location]"
+        alias: "lo"
+        desc: "(optional) - User's location."
+        type: true
+        index: 0
+      }
       admin: {
         param: "[admin]"
         alias: "a"
@@ -1449,6 +1456,20 @@ module.exports =
         param: "[can_create_group]"
         alias: "c"
         desc: "(optional) - User can create groups - true or false."
+        type: true
+        index: 0
+      }
+      confirm: {
+        param: "[confirm]"
+        alias: "co"
+        desc: "(optional) - Require confirmation - true (default) or false."
+        type: true
+        index: 0
+      }
+      external: {
+        param: "[external]"
+        alias: "ex"
+        desc: "(optional) - Flags the user as external - true or false(default)."
         type: true
         index: 0
       }
