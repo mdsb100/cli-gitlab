@@ -33,7 +33,7 @@ exports.url = (url) ->
   if url?
     nconf.set "url", url
     nconf.save()
-    console.log "Save url"
+    console.log "Save url. Please make sure your settings are 'http' or 'https'."
   else
     console.log nconf.get "url"
 

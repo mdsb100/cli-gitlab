@@ -4,6 +4,11 @@ Check [node-gitlab](https://github.com/moul/node-gitlab)
 Dependencie on node-gitlab 1.7.0 or late
 Quick Start
 =====
+
+You need to be very careful to set 'gitlab url'. 
+
+Please make sure your settings are 'http' or 'https'.
+
 ```bash
 # Install from npm for global
 npm install cli-gitlab -g

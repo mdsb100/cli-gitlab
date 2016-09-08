@@ -53,7 +53,7 @@ exports.url = function(url) {
   if (url != null) {
     nconf.set("url", url);
     nconf.save();
-    return console.log("Save url");
+    return console.log("Save url. Please make sure your settings are 'http' or 'https'.");
   } else {
     return console.log(nconf.get("url"));
   }

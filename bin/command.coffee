@@ -8,7 +8,7 @@ program.usage("[options]")
 .option("-o, --option", "Get option", worker.getOption)
 
 program.command("url [url]")
-.description("Get or Set url of gitlab")
+.description("Get or Set url of your gitlab website. Please make sure your settings are 'http' or 'https'.")
 .action(worker.url)
 
 program.command("token [token]")
