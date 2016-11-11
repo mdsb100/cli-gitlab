@@ -227,6 +227,13 @@ module.exports =
         type: true
         index: 1
       }
+      "due_date": {
+        param: "[due_date]"
+        alias: "dd"
+        desc: "(optional) - Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11"
+        type: true
+        index: 1
+      }
     desc: "Creates a new project issue.If the operation is successful, 200 and the newly created issue is returned. If an error occurs, an error number and a message explaining the reason is returned."
     nameSpaces: "issues.create"
     callback: stringifyFormat
@@ -275,6 +282,13 @@ module.exports =
         param: "[state_event]"
         alias: "s"
         desc: "(optional) - The state event of an issue ('close' to close issue and 'reopen' to reopen it)."
+        type: true
+        index: 2
+      }
+      "due_date": {
+        param: "[due_date]"
+        alias: "dd"
+        desc: "(optional) - Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11"
         type: true
         index: 2
       }

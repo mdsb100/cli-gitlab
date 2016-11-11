@@ -162,6 +162,8 @@ gitlab createIssue --help
     -a, --assignee_id [assignee_id]    (optional) - The ID of a user to assign issue.
     -m, --milestone_id [milestone_id]  (optional) - The ID of a milestone to assign issue.
     -l, --labels [labels]              (optional) - Comma-separated label names for an issue.
+    -dd, --due_date [due_date]         (optional) - Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11
+
 ```
 
 ```
@@ -212,6 +214,7 @@ gitlab editIssue --help
     -m, --milestone_id [milestone_id]  (optional) - The ID of a milestone to assign issue.
     -l, --labels [labels]              (optional) - Comma-separated label names for an issue.
     -s, --state_event [state_event]    (optional) - The state event of an issue ('close' to close issue and 'reopen' to reopen it).
+    -dd, --due_date [due_date]         (optional) - Date time string in the format YEAR-MONTH-DAY, e.g. 2016-03-11
 ```
 
 ```
