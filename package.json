@@ -1,27 +1,21 @@
 {
   "name": "cli-gitlab",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "GitLab CLI library.",
-  "main": "bin/refine.js",
+  "main": "bin/command.js",
   "directories": {
 
-  },
-  "scripts": {
-    "build": "./node_modules/coffee-script/bin/cake build"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mdsb100/cli-gitlab"
   },
   "dependencies": {
-    "gitlab": "~1.7.0",
+    "gitlab": "latest",
     "commander": "latest",
     "nconf": "latest",
     "underscore": "1.7.0",
     "json-stable-stringify": "latest"
-  },
-  "devDependencies": {
-    "coffee-script": "*"
   },
   "keywords": [
     "gitlab",
