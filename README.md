@@ -34,6 +34,55 @@ gitlab me
 
 ```
 
+Extend Usage
+=============
+```
+gitlab map test.json
+```
+test.json:
+```
+{
+  "t": {
+    "filter": true,
+    "size": true,
+    "param": ["<emailOrUsername>"],
+    "desc": "Search user by email or username.",
+    "nameSpaces": "users.search"
+  }
+}
+```
+
+```
+gitlab t --help
+  Usage: t [options] <emailOrUsername>
+
+  Search user by email or username.
+
+  Options:
+
+    -h, --help          output usage information
+     --size             (optional) - Output size of result.
+     --filter <filter>  (optional) - Filter result. For example: --filter 'item.assignee.id == 9'
+```
+Check [map rule](https://github.com/mdsb100/cli-gitlab/blob/master/bin/map.js)
+
+'nameSpaces' please check [node-gitlab](https://github.com/node-gitlab/node-gitlab/tree/develop/src/Models)
+
+For example:
+
+
+```
+# In Projects.coffee
+# class Projects extends BaseModel ==> projects
+# @members = @load 'ProjectMembers' ===> memebers
+
+# In ProjectMembers
+# update: (projectId, userId, accessLevel = 30, fn = null) => ===> update
+
+# so nameSpaces is 'projects.memebers.update'
+```
+
+By the way, the 'extend' function is used by undersore.extend.
 
 Filter Usage
 =============
