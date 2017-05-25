@@ -527,12 +527,12 @@ module.exports = {
   "updateMergeRequest": {
     param: ["<project_id>", "<merge_request_id>"],
     options: {
-      source_branch: {
-        param: "[source_branch]",
+      remove_source_branch: {
+        param: "[remove_source_branch]",
         alias: "s",
         type: true,
         index: 2,
-        desc: "(optional) - The source branch."
+        desc: "(optional) - Flag indicating if a merge request should remove the source branch when merging."
       },
       target_branch: {
         param: "[target_branch]",
@@ -567,7 +567,7 @@ module.exports = {
         alias: "e",
         type: true,
         index: 2,
-        desc: "(optional) - New state (close|reopen|merge)."
+        desc: "(optional) - New state (close/reopen)."
       },
       labels: {
         param: "[lables]",
