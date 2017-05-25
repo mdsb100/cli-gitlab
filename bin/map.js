@@ -104,9 +104,9 @@ module.exports = {
   "issueNotes": {
     filter: true,
     size: true,
-    param: ["<projectId>", "<issueId>"],
+    param: ["<projectId>", "<issue_id>"],
     desc: "List project issue notes.",
-    nameSpaces: "issues.notes.all"
+    nameSpaces: "projects.issues.notes.all"
   },
   "issues": {
     filter: true,
