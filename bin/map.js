@@ -54,7 +54,10 @@ module.exports = {
     param: ["<group_id>", "<user_id>", "<access_level>"],
     desc: "Adds a user to the list of group members.",
     help: accessLevelsCustomHelp,
-    nameSpaces: "groups.addMember"
+    nameSpaces: "groups.addMember",
+    paramHooks: {
+      "2": "toNumber"
+    }
   },
   "createGroup": {
     options: {

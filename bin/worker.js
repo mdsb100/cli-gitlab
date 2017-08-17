@@ -210,7 +210,13 @@ exports.createCommands = function(program) {
       if ((cmd.param != null) && typeof arguments[0] !== "object") {
         i = 0;
         while (typeof arguments[i] !== "object") {
-          arg.push(arguments[i]);
+          var paramHooks = cmd.paramHooks || {};
+          var hook = paramHooks[i];
+          var obj = arguments[i];
+          if (hook && hook === "toNumber") {
+            obj = Number(obj);
+          }
+          arg.push(obj);
           i++;
         }
       }
