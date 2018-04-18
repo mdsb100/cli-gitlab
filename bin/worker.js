@@ -1,4 +1,4 @@
-var defaultMap, checkOptions, configFilePath, fs, getMe, getObjectByNameSpaces, gitlab, gitlabDircPath, nconf, path, requireOrGetGitlab, _;
+var defaultMap, checkOptions, configFilePath, fs, getMe, getObjectByNameSpaces, gitlab, gitlabDircPath, nconf, path, requireOrGetGitlab, _, gitlabLib;
 
 defaultMap = require("./map.js");
 
@@ -9,6 +9,8 @@ fs = require("fs");
 path = require("path");
 
 _ = require("underscore");
+
+gitlabLib = require("gitlab")
 
 gitlabDircPath = path.join(process.env[(process.platform === "win32" ? "USERPROFILE" : "HOME")], ".gitlab");
 
@@ -53,7 +55,7 @@ requireOrGetGitlab = function() {
     return gitlab;
   } else {
     if (checkOptions()) {
-      gitlab = require("gitlab")({
+      gitlab = gitlabLib({
         url: nconf.get("url"),
         token: nconf.get("token")
       });
