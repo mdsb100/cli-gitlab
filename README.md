@@ -13,6 +13,9 @@ npm run build
 npm link
 
 gitlab -h
+gitlab url http://gitlab.xxx.net/
+gitlab token xxxxxxxxxxxxx
+gitlab-users whoami
 ```
 
 ***
