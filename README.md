@@ -9,6 +9,7 @@ For now, you can use it locally by `npm link`
 ```bash
 git clone git@github.com:mdsb100/node-gitlab.git
 cd node-gitlab && npm install
+npm run build
 npm link
 
 gitlab -h
