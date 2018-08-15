@@ -1,7 +1,7 @@
 cli-gitlab
 ===========
 
-Migrate to [mdsb100/node-gitlab](https://github.com/mdsb100/node-gitlab) for using node-gitlab@v3.70 and gitlab-API@v4.
+Migrate to [mdsb100/node-gitlab#cli](https://github.com/mdsb100/node-gitlab#cli) for using node-gitlab@v3.70 and gitlab-API@v4.
 
 I create a [pull-request](https://github.com/jdalrymple/node-gitlab/pull/147) to [jdalrymple/node-gitlab](https://github.com/jdalrymple/node-gitlab), but so far jdalrymple/node-gitlab has not accepted it.
 
