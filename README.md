@@ -1,5 +1,23 @@
 cli-gitlab
 ===========
+
+Migrate to [mdsb100/node-gitlab](https://github.com/mdsb100/node-gitlab) for using node-gitlab@v3.70 and gitlab-API@v4.
+
+I create a [pull-request](https://github.com/jdalrymple/node-gitlab/pull/147) to [jdalrymple/node-gitlab](https://github.com/jdalrymple/node-gitlab), but so far jdalrymple/node-gitlab has not accepted it.
+
+For now, you can use it locally by `npm link`
+```bash
+git clone git@github.com:mdsb100/node-gitlab.git
+cd node-gitlab && npm install
+npm link
+
+gitlab -h
+```
+
+***
+
+**The following is the old document**
+
 Check [node-gitlab](https://github.com/moul/node-gitlab)
 Dependencie on node-gitlab 1.7.0 or late
 Quick Start
