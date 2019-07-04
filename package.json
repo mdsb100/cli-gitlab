@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "commander": "latest",
-    "gitlab": "latest",
+    "gitlab": "1.8.0",
     "json-stable-stringify": "latest",
     "nconf": "latest",
     "underscore": "1.7.0"
